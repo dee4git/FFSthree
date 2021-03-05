@@ -16,8 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('contact_us/', views.contact_us, name='contact_us'),
     path('working/', views.working, name='working'),
 ]
+
+# needed to upload and use static files
+urlpatterns += staticfiles_urlpatterns()
