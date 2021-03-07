@@ -53,7 +53,9 @@ ROOT_URLCONF = 'FFSthree.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [BASE_DIR / 'templates',
+                 'accounts/templates',
+                 ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
