@@ -1,0 +1,85 @@
+
+
+{% extends "base.html" %}]
+{% block body %}
+    <div class="container">
+        <br>
+        <p class="text-center">dj created it , almost!
+        <hr>
+
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <header class="card-header">
+                        <h4 class="card-title mt-2">{{ top }}</h4>
+                    </header>
+                    <article class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class="form-row">
+                                {% csrf_token %}
+                                <div class="col form-group">
+
+                                </div> <!-- form-group end.// -->
+                            </div> <!-- form-row end.// -->
+                            {% for foo in form %}
+                                <div class="form-group">
+
+        <span style="color: rgb(0,81,117); font-size: larger">
+            <label> {{ foo.label_tag }}&nbsp;&nbsp;{{ foo }}</label></span>
+
+                                    <span style="color: rgba(0,0,0,0.53); ">
+            <label>{{ foo.help_text }}</label></span>
+
+                                    <span style="color: #ff464b; ">
+            <label>{{ foo.errors }}</label></span>
+                                </div>
+                            {% endfor %}
+                            <div class="form-group" align="right">
+                                <a href="{% url "home" %}"
+                                   onclick="return confirm('Are you sure you want to Cancel?');">
+
+                                    <button type="button" class="btn btn-secondary btn-lg">{{ cancel }}</button>
+                                </a>
+
+
+                                <a onclick="return confirm('{{ confmsg }}');">
+
+                                    <button type="submit" class="btn btn-info btn-lg">{{ confirm }}</button>
+                                </a>
+
+                            </div>
+
+                            <!-- form-group// -->
+
+                        </form>
+                    </article> <!-- card-body end .// -->
+
+                </div> <!-- card.// -->
+            </div> <!-- col.//-->
+
+        </div> <!-- row.//-->
+
+
+    </div>
+    <!--container end.//-->
+
+    <br><br>
+    <article class="bg-secondary mb-3">
+        <div class="card-body text-center">
+            <h3 class="text-white mt-3">Bootstrap 4 UI KIT</h3>
+            <p class="h5 text-white">Components and templates <br> for Ecommerce, marketplace, booking websites
+                and product landing pages</p>   <br>
+            <p><a class="btn btn-warning" target="_blank" href="http://bootstrap-ecommerce.com/">
+                Bootstrap-ecommerce.com
+                <i class="fa fa-window-restore "></i></a></p>
+        </div>
+        <br><br>
+    </article>
+{% endblock %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">

@@ -1,0 +1,77 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+ {%extends "base.html" %}]
+ {% block body %}
+<div class="container">
+    <br>
+    <p class="text-center">dj created it , almost!
+    <hr>
+
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <header class="card-header">
+                    <a href={% url "login" %} class="float-right btn btn-outline-primary mt-1">Log IN</a>
+                    <h4 class="card-title mt-2">Sign up</h4>
+                </header>
+                <article class="card-body">
+                    <form method="POST" action="{% url 'signup' %}">
+                        <div class="form-row">
+                            {% csrf_token %}
+                            <div class="col form-group">
+
+                            </div> <!-- form-group end.// -->
+                        </div> <!-- form-row end.// -->
+                        {% for foo in form %}
+                            <div class="form-group">
+
+        <span style="color: rgb(0,81,117); font-size: larger">
+            <label> {{ foo.label_tag }}&nbsp;&nbsp;{{ foo }}</label></span>
+
+                                <span style="color: rgba(0,0,0,0.53); ">
+            <label>{{ foo.help_text }}</label></span>
+
+                                <span style="color: #ff464b; ">
+            <label>{{ foo.errors }}</label></span>
+                            </div>
+                        {% endfor %}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-secondary btn-block"> Register</button>
+
+                        </div>
+
+                        <!-- form-group// -->
+                        <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br>
+                            Terms of use and Privacy Policy.</small>
+                    </form>
+                </article> <!-- card-body end .// -->
+                <div class="border-top card-body text-center">Have an account? <a href={% url "login" %}>Log In</a>
+                </div>
+            </div> <!-- card.// -->
+        </div> <!-- col.//-->
+
+    </div> <!-- row.//-->
+
+
+</div>
+<!--container end.//-->
+
+<br><br>
+<article class="bg-secondary mb-3">
+    <div class="card-body text-center">
+        <h3 class="text-white mt-3">Bootstrap 4 UI KIT</h3>
+        <p class="h5 text-white">Components and templates <br> for Ecommerce, marketplace, booking websites
+            and product landing pages</p>   <br>
+        <p><a class="btn btn-warning" target="_blank" href="http://bootstrap-ecommerce.com/"> Bootstrap-ecommerce.com
+            <i class="fa fa-window-restore "></i></a></p>
+    </div>
+    <br><br>
+</article>
+{% endblock %}
