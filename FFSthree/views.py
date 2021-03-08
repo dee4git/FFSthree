@@ -1,6 +1,7 @@
 from django.core.mail import send_mail
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
+import accounts
 
 def home(request):
     """views the home page"""
@@ -20,7 +21,13 @@ def contact_us(request):
         comment = request.GET.get('comment')
 
     if email is not None:
-        send_mail(ur_name, 'Sent by:' + ur_name + '\nFeedback:' + comment + '\ncontact: ' + email, email, ['dee4code''@gmail.com'])
+        send_mail(ur_name, 'Sent by:' + ur_name + '\nFeedback:' + comment + '\ncontact: ' + email, email,
+                  ['dee4code''@gmail.com'])
         return render(request, 'thanks.html')
 
     return render(request, 'contact_us.html')
+
+
+@login_required()
+def make_money(request):
+    return render(request, 'make_money.html')

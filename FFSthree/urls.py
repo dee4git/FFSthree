@@ -23,6 +23,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('contact_us/', views.contact_us, name='contact_us'),
     path('working/', views.working, name='working'),
+    path('make_money/', views.make_money, name='make_money'),
     path('accounts/', include('accounts.urls')),
 
 ]

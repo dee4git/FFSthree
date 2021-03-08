@@ -28,6 +28,9 @@
                                 </div> <!-- form-group end.// -->
                             </div> <!-- form-row end.// -->
                             {{ form.as_p }}
+                            {% if request.GET.next  %}
+                                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                            {% endif %}
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-secondary btn-block"> Login</button>

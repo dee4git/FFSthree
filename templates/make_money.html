@@ -1,0 +1,30 @@
+{% extends "navbar.html" %}
+{% block content %}
+
+    <div class="jumbotron d-flex align-items-center">
+        <div class="container">
+            <div class="row justify-content-center align-self-center">
+                <h5>Lets make money with FFS!</h5>
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="row justify-content-center align-self-center">
+
+                    <a href= {% url 'working' %} class="text-decoration-none" >
+                        <h3>Create Store</h3></a>
+                </div>
+                <div class="row justify-content-center align-self-center">
+
+                    <a href= {% url 'working' %} class="text-decoration-none" >
+                        <h3>Join as a Freelance Delivery Fighter</h3></a></div>
+            {% else %}
+                <div class="row justify-content-center align-self-center">
+
+                <a href= {% url 'login' %} class="text-decoration-none" >
+                    <h3>Please Login First</h3></a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

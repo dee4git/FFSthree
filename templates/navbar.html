@@ -21,14 +21,14 @@
                 <a class="nav-link" href="{% url 'contact_us' %}" >Contact Us</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'working' %}">MAKE MONEY</a>
+                <a class="nav-link" href="{% url 'make_money' %}">MAKE MONEY</a>
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'working' %}">See Profile :  {{user.username}} </a>
+                    <a class="nav-link" href="{% url 'working' %}">My Profile :  {{user.username}} </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log OUT Sir </a>
+                    <a class="nav-link" href="{% url 'logout' %}">LOG OUT </a>
                 </li>
             {% else %}
                 <li class="nav-item">

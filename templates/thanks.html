@@ -1,23 +1,13 @@
 {% extends "navbar.html" %}
 {% block content %}
 
-    <div class="jumbotron d-flex align-items-center">
+<div class="jumbotron d-flex align-items-center">
         <div class="container">
             <h2>Thank you for your feedback, our response team will get back to you soon!</h2>
-            <div class="container h-100">
-                <div class="row align-items-center h-100">
-                    <div class="col-6 mx-auto">
-                        <a href= {% url 'home' %} class="text-decoration-none" >
-                            <div class="btn-group">
-                                <button class="btn">GO HOME</button>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-
+            <a href= {% url 'home' %} class="text-decoration-none" >
+            <div class="row justify-content-center align-self-center">
+                    Go Home
+            </div></a>
+        </div></div>
 {% endblock %}
+
