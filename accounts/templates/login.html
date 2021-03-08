@@ -1,24 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-</head>
-<body>
-    <div >
-        <form method = "POST">
-            {% csrf_token %}
-            {{ form.as_p }}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
-            <div>
-                <button type = "submit">sign in</button>
-            </div>
-        </form>
-        <div>
-            
-            <p>  Need an Account ? <a href="{% url 'register' %}">Sign Up</a></p>
-        </div>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+{%extends "navbar.html" %}
+{% block content %}
+    <div class="container">
+        <br>
+        <h3 class="text-center"> Welcome to Freelance Food Service </h3>
+        <hr>
+
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <header class="card-header">
+                        <a href={% url "register" %} class="float-right btn btn-outline-primary mt-1">Sign UP</a>
+                        <h4 class="card-title mt-2">LOG IN</h4>
+                    </header>
+                    <article class="card-body">
+                        <form method="POST" action="{% url 'login' %}">
+                            <div class="form-row">
+                                {% csrf_token %}
+                                <div class="col form-group">
+
+                                </div> <!-- form-group end.// -->
+                            </div> <!-- form-row end.// -->
+                            {{ form.as_p }}
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-secondary btn-block"> Login</button>
+
+                            </div>
+
+                            <!-- form-group// -->
+                            <a class="text-decoration-none" href="{% url 'password_reset' %}">
+                                <small class="text-muted">Forgot Password?</small>
+                            </a>
+                        </form>
+                    </article> <!-- card-body end .// -->
+                    <div class="border-top card-body text-center">New user? <a href={% url "register" %}>Sign Up</a></div>
+                </div> <!-- card.// -->
+            </div> <!-- col.//-->
+
+        </div> <!-- row.//-->
+
+
     </div>
-</body>
-</html>
+
+    <br><br>
+    <article class="bg-secondary mb-3">
+        <div class="card-body text-center">
+            <h3 class="text-white mt-3">Freelance Food Service</h3>
+
+        </div>
+        <br><br>
+    </article>
+{% endblock %}
