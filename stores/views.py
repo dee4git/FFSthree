@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+
+from rates.models import StoreRating
 from . import forms
 from .models import Store
 # from products.models import Product
@@ -30,17 +32,17 @@ def create_store(request):
                   )
 
 
-def update_store(request, id):
+def update_store(request, store_id):
     top = "Edit your store"
     confirm = "Confirm"
     confirmation = "Update Store?"
     cancel = "Cancel"
-    up = Store.objects.get(pk=id)
+    up = Store.objects.get(pk=store_id)
     if request.method == "POST":
         form = forms.Form(request.POST or None, request.FILES, instance=up)
         if form.is_valid():
             form.save()
-            return view_store(request, id)
+            return view_store(request, store_id)
 
     else:
         form = forms.Form(instance=up)
@@ -54,20 +56,32 @@ def update_store(request, id):
                   )
 
 
-def view_store(request, id):
+def view_store(request, store_id):
     status = 0
-    detail = Store.objects.get(pk=id)
+    rated = 0
+    detail = Store.objects.get(pk=store_id)
     if detail.owner == request.user:
         status = 1
+    try:
+        if StoreRating.objects.get(store=store_id, user=request.user):
+            rated = 1
+            current_rating = StoreRating.objects.get(store=store_id, user=request.user)
+            return render(request, "detail_store.html", {"store": detail,
+                                                     "status": status,
+                                                     "rated": rated,
+                                                     "current_rating": current_rating
+                                                     # "products": products,
+                                                     })
+    except:
+        return render(request, "detail_store.html", {"store": detail,
+                                                     "status": status,
+                                                     "rated": rated,
+                                                     # "products": products,
+                                                     })
 
-    return render(request, "detail_store.html", {"store": detail,
-                                                 "status": status,
-                                                 # "products": products,
-                                                 })
 
-
-def delete_store(request, id):
-    Store.objects.get(pk=id).delete()
+def delete_store(request, store_id):
+    Store.objects.get(pk=store_id).delete()
     return redirect("/")
 
 

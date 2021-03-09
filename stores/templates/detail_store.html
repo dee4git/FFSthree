@@ -4,83 +4,99 @@
 {% load static %}
 {% block content %}
 
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png" />
-<meta name="description" content="Demo of Bootstrap 4 user profile card widget to show different styles of user card created with default card and other components.">
-<title>Bootstrap 4 User Profile Card » WebNots</title> 
-<!-- CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<style>
-.btn{border-radius: 0;}
-.btn-md {
-border-width: 0;
-outline: none;
-border-radius: 0;
-box-shadow: 2px 2px 2px rgba(0, 0, 0, .6);
-cursor: pointer;
-}    
-    h3 {text-align:center;margin:40px;}
-</style>
-<body>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png" />
+        <meta name="description" content="Demo of Bootstrap 4 user profile card widget to show different styles of user card created with default card and other components.">
+        <title>Bootstrap 4 User Profile Card » WebNots</title>
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <style>
+        .btn{border-radius: 0;}
+        .btn-md {
+            border-width: 0;
+            outline: none;
+            border-radius: 0;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, .6);
+            cursor: pointer;
+        }
+        h3 {text-align:center;margin:40px;}
+    </style>
+    <body>
 
-<h3 class="headalign">Welcome to {{ store.name  }}</h3>
-<div class="container-fluid">
-  <div class="row">
-      <div class="col-12">
-     <div class="card card-inverse" style="background-color: #333; border-color: #333;">
-            <div class="card-block">
-			  <div class="row">
-			  <div class="col-md-4 col-sm-4 text-center">
-					<img class="img-fluid"
-                            src="{{ store.display_picture.url}}" alt="" class="btn-md">
-				</div>
-				<div class="col-md-8 col-sm-8">
-					<h2 class="card-title">{{ store.name }}</h2>
-					<p class="card-text"><strong>Location: </strong> {{ store.location}} </p>
-					<p class="card-text"><strong>Description: </strong> {{ store.description }}</p>
-					{% if status == 1 %}
-                    <p><strong>Owner actions: </strong>
-                        <a href= {% url 'update_store' store.id %} class="text-decoration-none">
-						<span class="badge bg-primary">Edit Store</span></a>
-                        <a href= {% url 'working' %} class="text-decoration-none">
-						<span class="badge bg-info">Add Plans</span></a>
-                        <a onclick="return confirm('Are you sure you want to create this store?');"
-                                href= {% url 'delete_Store' store.id %} class="text-decoration-none">
-						<span class="badge bg-warning">Delete</span></a>
-					</p>
-                    {% endif %}
-				</div>         
-				<div class="col-md-4 col-sm-4 text-center">
-					<h2><strong> 5.2K </strong></h2>                    
-					<p><small>Fans</small></p>
-					<button class="btn btn-primary btn-block btn-md"><span class="fa fa-facebook-square"></span> Follow  </button>
-				</div>
-				<div class="col-md-4 col-sm-4 text-center">
-					<h2><strong>1.4K</strong></h2>                    
-					<p><small>Following</small></p>
-					<button class="btn btn-success btn-block btn-md"><span class="fa fa-twitter-square"></span>Rate and Review </button>
-				</div>
-				<div class="col-md-4 col-sm-4 text-center">
-					<h2><strong>3.8K</strong></h2>                    
-					<p><small>Followers</small></p>
-					<button type="button" class="btn btn-danger btn-block btn-md"><span class="fa fa-google-plus-square"></span> Report </button>
-				</div>
-			  </div>
-              </div>
-          </div>
+    <h3 class="headalign">Welcome to {{ store.name  }}</h3>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-inverse" style="background-color: #333; border-color: #333;">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 text-center">
+                                <img class="img-fluid"
+                                     src="{{ store.display_picture.url}}" alt="" class="btn-md">
+                            </div>
+                            <div class="col-md-8 col-sm-8">
+                                <h2 class="card-title">{{ store.name }}</h2>
+                                <p class="card-text"><strong>Location: </strong> {{ store.location}} </p>
+                                <p class="card-text"><strong>Description: </strong> {{ store.description }}</p>
+                                {% if status == 1 %}
+                                    <p><strong>Owner actions: </strong>
+                                        <a href= {% url 'update_store' store.id %} class="text-decoration-none">
+                                            <span class="badge bg-primary">Edit Store</span></a>
+                                        <a href= {% url 'working' %} class="text-decoration-none">
+                                            <span class="badge bg-info">Add Plans</span></a>
+                                        <a onclick="return confirm('Are you sure you want to create this store?');"
+                                           href= {% url 'delete_Store' store.id %} class="text-decoration-none">
+                                            <span class="badge bg-warning">Delete</span></a>
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 col-sm-4 text-center">
+                                <h2><strong> 5.2K </strong></h2>
+                                <p><small>Fans</small></p>
+                                <button class="btn btn-primary btn-block btn-md"><span class="fa fa-facebook-square"></span> Follow  </button>
+                            </div>
+                            {% if rated == 0 %}
+                                <div class="col-md-4 col-sm-4 text-center">
+                                    <h2><strong>1.4K</strong></h2>
+                                    <p><small>Following</small></p>
+
+                                    <a href= {% url 'rate_store' store.id %} class="text-decoration-none" >
+                                        <button class="btn btn-success btn-block btn-md">
+                                        <span class="fa fa-twitter-square">
+                                        </span>Rate and Review </button></a>
+                                </div>
+                            {% else %}
+                                <div class="col-md-4 col-sm-4 text-center">
+                                    <h2><strong>Your Current Rating</strong></h2>
+                                    <p><small>{{ current_rating.rating }} ⭐</small></p>
+
+                                    <a href= {% url 'edit_store_rating' store.id %} class="text-decoration-none" >
+                                        <button class="btn btn-success btn-block btn-md">
+                                        <span class="fa fa-twitter-square">
+                                        </span>Edit your rating </button></a>
+                                </div>
+                            {% endif %}
+                            <div class="col-md-4 col-sm-4 text-center">
+                                <h2><strong>3.8K</strong></h2>
+                                <p><small>Followers</small></p>
+                                <button type="button" class="btn btn-danger btn-block btn-md"><span class="fa fa-google-plus-square"></span> Report </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div> 
-</div>
-<!-- End Content -->
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-</body>
-</html>
+    <!-- End Content -->
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    </body>
+    </html>
 {% endblock %}
