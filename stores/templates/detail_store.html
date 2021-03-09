@@ -28,7 +28,6 @@
     </style>
     <body>
 
-    <h3 class="headalign">Welcome to {{ store.name  }}</h3>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -58,7 +57,7 @@
                             <div class="col-md-4 col-sm-4 text-center">
                                 <h2><strong> 5.2K </strong></h2>
                                 <p><small>Fans</small></p>
-                                <button class="btn btn-primary btn-block btn-md"><span class="fa fa-facebook-square"></span> Follow  </button>
+                                <button class="btn btn-primary btn-block btn-md"><span class="fa fa-facebook-square"></span> Plans  </button>
                             </div>
                             {% if rated == 0 %}
                                 <div class="col-md-4 col-sm-4 text-center">
@@ -82,9 +81,12 @@
                                 </div>
                             {% endif %}
                             <div class="col-md-4 col-sm-4 text-center">
-                                <h2><strong>3.8K</strong></h2>
-                                <p><small>Followers</small></p>
-                                <button type="button" class="btn btn-danger btn-block btn-md"><span class="fa fa-google-plus-square"></span> Report </button>
+                                <h2><strong>Overall Rating</strong></h2>
+                                <p><small>{{ rating }} ⭐</small></p>
+                                <a href= {% url 'store_review' store.id %} class="text-decoration-none" >
+
+                                <button type="button" class="btn btn-danger btn-block btn-md"><span class="fa fa-google-plus-square"></span> Reviews </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -99,4 +101,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     </body>
     </html>
+
+<div class="container-fluid">
+    {% block rating %}
+        <p>expecting content here</p>
+    {% endblock %}
+</div>
 {% endblock %}

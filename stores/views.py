@@ -1,3 +1,5 @@
+from statistics import mean
+
 from django.shortcuts import render, redirect
 
 from rates.models import StoreRating
@@ -56,24 +58,36 @@ def update_store(request, store_id):
                   )
 
 
+def get_rating(request, store_id):
+    rating_list = []
+    comments = []
+    ratings = StoreRating.objects.filter(store=Store.objects.get(pk=store_id))
+    for i in ratings:
+        rating_list.append(i.rating)
+    return [round(mean(rating_list), 2), ratings]
+
+
 def view_store(request, store_id):
-    status = 0
-    rated = 0
-    detail = Store.objects.get(pk=store_id)
-    if detail.owner == request.user:
+    status = 0  # checks if the current user is the owner
+    rated = 0  # checks if the user has already rated the store
+    store = Store.objects.get(pk=store_id)
+    rating = get_rating(request, store_id)
+    rating = rating[0]  # zeroth element contain the avg rating of the shop
+    if store.owner == request.user:
         status = 1
     try:
         if StoreRating.objects.get(store=store_id, user=request.user):
             rated = 1
             current_rating = StoreRating.objects.get(store=store_id, user=request.user)
-            return render(request, "detail_store.html", {"store": detail,
-                                                     "status": status,
-                                                     "rated": rated,
-                                                     "current_rating": current_rating
-                                                     # "products": products,
-                                                     })
+            return render(request, "detail_store.html", {"store": store,
+                                                         "status": status,
+                                                         "rated": rated,
+                                                         "rating": rating,
+                                                         "current_rating": current_rating,
+                                                         # "products": products,
+                                                         })
     except:
-        return render(request, "detail_store.html", {"store": detail,
+        return render(request, "detail_store.html", {"store": store,
                                                      "status": status,
                                                      "rated": rated,
                                                      # "products": products,
@@ -90,3 +104,35 @@ def all_stores(request):
     return render(request, 'all_stores.html', {
         'stores': stores
     })
+
+
+def store_review(request, store_id):
+    status = 0  # checks if the current user is the owner
+    rated = 0  # checks if the user has already rated the store
+    store = Store.objects.get(pk=store_id)
+    rating = get_rating(request, store_id)
+    rating = rating[0]  # zeroth element contain the avg rating of the shop
+    # rating machine begins
+    reviews = get_rating(request, store_id)
+    reviews = reviews[1]
+    if store.owner == request.user:
+        status = 1
+    try:
+        if StoreRating.objects.get(store=store_id, user=request.user):
+            rated = 1
+            current_rating = StoreRating.objects.get(store=store_id, user=request.user)
+            return render(request, "comments_store.html", {"store": store,
+                                                           "status": status,
+                                                           "rated": rated,
+                                                           "rating": rating,
+                                                           "reviews": reviews,
+                                                           "current_rating": current_rating,
+                                                           # "products": products,
+                                                           })
+    except:
+        return render(request, "comments_store.html", {"store": store,
+                                                       "status": status,
+                                                       "rated": rated,
+                                                       "reviews": reviews
+                                                       # "products": products,
+                                                       })
