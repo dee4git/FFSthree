@@ -38,9 +38,14 @@ def already_rated(request, store_id):
      when a user is trying to be redirected to rating page after logging in
      this function stops the user from rating twice
      by showing the store instead of letting the user rate again."""
-    if StoreRating.objects.get(store=store_id, user=request.user):
-        return True
-    else:
+
+    # need this try catch in case there is no rating already
+    try:
+        if StoreRating.objects.get(store=store_id, user=request.user):
+            return True
+        else:
+            return False
+    except:
         return False
 
 

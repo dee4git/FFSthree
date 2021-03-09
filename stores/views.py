@@ -59,20 +59,23 @@ def update_store(request, store_id):
 
 
 def get_rating(request, store_id):
-    rating_list = []
-    comments = []
-    ratings = StoreRating.objects.filter(store=Store.objects.get(pk=store_id))
-    for i in ratings:
-        rating_list.append(i.rating)
-    return [round(mean(rating_list), 2), ratings]
+    try:
+        rating_list = []
+        ratings = StoreRating.objects.filter(store=Store.objects.get(pk=store_id))
+        for i in ratings:
+            rating_list.append(i.rating)
+        return [round(mean(rating_list), 2), ratings, len(rating_list)]
+    except:
+        return [0, None, 0]
 
 
 def view_store(request, store_id):
     status = 0  # checks if the current user is the owner
     rated = 0  # checks if the user has already rated the store
     store = Store.objects.get(pk=store_id)
-    rating = get_rating(request, store_id)
-    rating = rating[0]  # zeroth element contain the avg rating of the shop
+    current_rating = get_rating(request, store_id)
+    rating = current_rating[0]  # zeroth element contain the avg rating of the shop
+    people = current_rating[2]  # number of people rated
     if store.owner == request.user:
         status = 1
     try:
@@ -83,6 +86,7 @@ def view_store(request, store_id):
                                                          "status": status,
                                                          "rated": rated,
                                                          "rating": rating,
+                                                         "people": people,
                                                          "current_rating": current_rating,
                                                          # "products": products,
                                                          })
@@ -110,8 +114,9 @@ def store_review(request, store_id):
     status = 0  # checks if the current user is the owner
     rated = 0  # checks if the user has already rated the store
     store = Store.objects.get(pk=store_id)
-    rating = get_rating(request, store_id)
-    rating = rating[0]  # zeroth element contain the avg rating of the shop
+    current_rating = get_rating(request, store_id)
+    rating = current_rating[0]  # zeroth element contain the avg rating of the shop
+    people = current_rating[2]  # number of people rated
     # rating machine begins
     reviews = get_rating(request, store_id)
     reviews = reviews[1]
@@ -126,6 +131,7 @@ def store_review(request, store_id):
                                                            "rated": rated,
                                                            "rating": rating,
                                                            "reviews": reviews,
+                                                           "people": people,
                                                            "current_rating": current_rating,
                                                            # "products": products,
                                                            })

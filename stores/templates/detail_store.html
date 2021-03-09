@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 {% extends 'navbar.html' %}
 {% load static %}
@@ -82,9 +81,8 @@
                             {% endif %}
                             <div class="col-md-4 col-sm-4 text-center">
                                 <h2><strong>Overall Rating</strong></h2>
-                                <p><small>{{ rating }} ⭐</small></p>
+                                <p><small>{{ rating }} ⭐ (👥 {{ people }} )</small></p>
                                 <a href= {% url 'store_review' store.id %} class="text-decoration-none" >
-
                                 <button type="button" class="btn btn-danger btn-block btn-md"><span class="fa fa-google-plus-square"></span> Reviews </button>
                                 </a>
                             </div>
