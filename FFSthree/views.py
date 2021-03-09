@@ -1,11 +1,16 @@
 from django.core.mail import send_mail
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-import accounts
+from stores.models import Store
+
 
 def home(request):
     """views the home page"""
-    return render(request, 'home.html')
+    stores = Store.objects.all()
+
+    return render(request, "home.html", {
+        "stores": stores,
+    })
 
 
 def working(request):
@@ -31,3 +36,5 @@ def contact_us(request):
 @login_required()
 def make_money(request):
     return render(request, 'make_money.html')
+
+

@@ -1,0 +1,12 @@
+{% extends 'navbar.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css"
+    href="{% static 'detail_store.css' %}">
+
+
+            <a href= {% url 'home' %} class="text-decoration-none" >
+
+
+          <a onclick="return confirm('Are you sure you want to create this store?');"
+                                href= {% url 'delete_Store' store.id %} class="text-decoration-none">

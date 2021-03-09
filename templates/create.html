@@ -1,10 +1,10 @@
 
 
-{% extends "base.html" %}]
-{% block body %}
+{% extends "navbar.html" %}]
+{% block content %}
     <div class="container">
         <br>
-        <p class="text-center">dj created it , almost!
+        <p class="text-center">
         <hr>
 
 
@@ -37,7 +37,7 @@
                             {% endfor %}
                             <div class="form-group" align="right">
                                 <a href="{% url "home" %}"
-                                   onclick="return confirm('Are you sure you want to Cancel?');">
+                                   onclick="return confirm('Are you sure you want to create this store?');">
 
                                     <button type="button" class="btn btn-secondary btn-lg">{{ cancel }}</button>
                                 </a>

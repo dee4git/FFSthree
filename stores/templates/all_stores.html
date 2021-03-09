@@ -1,9 +1,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% extends 'navbar.html' %}
 {% block content %}
+
     <div class="container">
         <br/>
-        <h2>To shops in FFS</h2>
+        <h2>All Shops</h2>
         <hr/>
         <div class="row">
             {% for i in stores %}
@@ -21,11 +22,15 @@
                         <div class="card-body">
                             <p class="card-text">Description: {{ i.description }}</p>
                         </div>
+
+
                         <br/>
                     </div>
                 </div>
+
                 <br/>
-            {% endfor %}
+
+                {% endfor %}
         </div>
 
     </div>

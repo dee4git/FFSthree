@@ -9,7 +9,8 @@ class Form(forms.ModelForm):
         fields = [
            "name",
            "location",
-           "dp",
+           "description",
+           "display_picture",
         ]
 
 

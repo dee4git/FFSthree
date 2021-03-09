@@ -23,9 +23,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'make_money' %}">MAKE MONEY</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'all_stores' %}">STORES</a>
+            </li>
+        </ul>
+            <ul class="navbar-nav ml-auto">
+
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'working' %}">My Profile :  {{user.username}} </a>
+                    <a class="nav-link" href="{% url 'working' %}">Hi  {{user.username}}!</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">LOG OUT </a>
@@ -51,5 +57,3 @@
         <p>expecting content here</p>
     {% endblock %}
 </div>
-
-
