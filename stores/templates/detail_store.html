@@ -56,8 +56,9 @@
                             <div class="col-md-4 col-sm-4 text-center">
                                 <h2><strong> 5.2K </strong></h2>
                                 <p><small>Fans</small></p>
-                                <button class="btn btn-primary btn-block btn-md"><span class="fa fa-facebook-square"></span> Plans  </button>
-                            </div>
+                                <a href= {% url 'view_store' store.id %} class="text-decoration-none">
+                                    <button class="btn btn-primary btn-block btn-md"><span class="fa fa-facebook-square"></span> Plans </button>
+                                </a></div>
                             {% if rated == 0 %}
                                 <div class="col-md-4 col-sm-4 text-center">
                                     <h2><strong>1.4K</strong></h2>
@@ -71,7 +72,7 @@
                             {% else %}
                                 <div class="col-md-4 col-sm-4 text-center">
                                     <h2><strong>Your Current Rating</strong></h2>
-                                    <p><small>{{ current_rating.rating }} ⭐</small></p>
+                                    <p><small>{{ your_rating }} ⭐</small></p>
 
                                     <a href= {% url 'edit_store_rating' store.id %} class="text-decoration-none" >
                                         <button class="btn btn-success btn-block btn-md">
@@ -81,9 +82,9 @@
                             {% endif %}
                             <div class="col-md-4 col-sm-4 text-center">
                                 <h2><strong>Overall Rating</strong></h2>
-                                <p><small>{{ rating }} ⭐ (👥 {{ people }} )</small></p>
+                                <p><small>{{ stars }} &nbsp;&nbsp;{{ rating }} (👥 {{ people }} )</small></p>
                                 <a href= {% url 'store_review' store.id %} class="text-decoration-none" >
-                                <button type="button" class="btn btn-danger btn-block btn-md"><span class="fa fa-google-plus-square"></span> Reviews </button>
+                                    <button type="button" class="btn btn-danger btn-block btn-md"><span class="fa fa-google-plus-square"></span> Reviews </button>
                                 </a>
                             </div>
                         </div>
@@ -100,9 +101,9 @@
     </body>
     </html>
 
-<div class="container-fluid">
-    {% block rating %}
-        <p>expecting content here</p>
-    {% endblock %}
-</div>
+    <div class="container-fluid">
+        {% block rating %}
+            <p>expecting content here</p>
+        {% endblock %}
+    </div>
 {% endblock %}
