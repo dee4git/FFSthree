@@ -28,7 +28,7 @@ urlpatterns = [
     path('make_money/', views.make_money, name='make_money'),
     path('accounts/', include('accounts.urls')),
     path('stores/', include('stores.urls')),
-    path('stores/', include('rates.urls')),
+    path('rates/', include('rates.urls')),
 
 ]
 

@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from rates.models import StoreRating
 from . import forms
 from .models import Store
-# from products.models import Product
+# from plans.models import Product
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         UserPassesTestMixin)
 
@@ -95,8 +95,8 @@ def view_store(request, store_id):
     try:
         if StoreRating.objects.get(store=store_id, user=request.user):
             rated = 1
-            your_rating = StoreRating.objects.get(store=store_id, user=request.user)
-            your_stars = get_full_star(your_rating.rating-1)
+            your_review = StoreRating.objects.get(store=store_id, user=request.user)
+            your_stars = get_full_star(your_review.rating)
             return render(request, "detail_store.html", {"store": store,
                                                          "status": status,
                                                          "rated": rated,
@@ -104,7 +104,7 @@ def view_store(request, store_id):
                                                          "people": people,
                                                          "your_rating": your_stars,
                                                          "stars": stars,
-                                                         # "products": products,
+                                                         # "plans": plans,
                                                          })
     except:
         return render(request, "detail_store.html", {"store": store,
@@ -113,7 +113,7 @@ def view_store(request, store_id):
                                                      "rating": rating,
                                                      "people": people,
                                                      "stars": stars,
-                                                     # "products": products,
+                                                     # "plans": plans,
                                                      })
 
 
@@ -138,26 +138,25 @@ def store_review(request, store_id):
     people = current_rating[2]  # number of people rated
     stars = current_rating[3]  # number of full star
     # rating machine begins
-    reviews = get_rating(request, store_id)
-    reviews = reviews[1]  # 2nd element has all the ratings of a store
+    reviews = current_rating[1]  # 2nd element has all the ratings of a store
     if store.owner == request.user:
         status = 1
     try:
         # enters is the user has rated the store already
         if StoreRating.objects.get(store=store_id, user=request.user):
             rated = 1
-            your_rating = StoreRating.objects.get(store=store_id, user=request.user)
-            your_stars = get_full_star(your_rating.rating - 1)
+            your_review = StoreRating.objects.get(store=store_id, user=request.user)
+            your_stars = get_full_star(your_review.rating)
             return render(request, "comments_store.html", {"store": store,
-                                                         "status": status,
-                                                         "rated": rated,
-                                                         "rating": rating,
-                                                         "people": people,
-                                                         "stars": stars,
-                                                         "your_rating": your_stars,
-                                                         "reviews": reviews
-                                                         # "products": products,
-                                                         })
+                                                           "status": status,
+                                                           "rated": rated,
+                                                           "rating": rating,
+                                                           "people": people,
+                                                           "stars": stars,
+                                                           "your_rating": your_stars,
+                                                           "reviews": reviews
+                                                           # "plans": plans,
+                                                           })
     except:
         # enters is the user has not rated the store
         return render(request, "comments_store.html", {"store": store,
@@ -167,5 +166,5 @@ def store_review(request, store_id):
                                                        "people": people,
                                                        "stars": stars,
                                                        "reviews": reviews
-                                                       # "products": products,
+                                                       # "plans": plans,
                                                        })
