@@ -41,6 +41,7 @@
                                 <h2 class="card-title">{{ store.name }}</h2>
                                 <p class="card-text"><strong>Location: </strong> {{ store.location}} </p>
                                 <p class="card-text"><strong>Description: </strong> {{ store.description }}</p>
+                                <p class="card-text"><strong>Phone: </strong> {{ store.phone }}</p>
                                 {% if status == 1 %}
                                     <p><strong>Owner actions: </strong>
                                         <a href= {% url 'update_store' store.id %} class="text-decoration-none">

@@ -7,10 +7,9 @@ class Form(forms.ModelForm):
     class Meta:
         model = Store
         fields = [
-           "name",
-           "location",
-           "description",
-           "display_picture",
+            "name",
+            "location",
+            "phone",
+            "description",
+            "display_picture",
         ]
-
-
