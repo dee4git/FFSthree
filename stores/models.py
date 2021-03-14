@@ -14,6 +14,7 @@ class Store(models.Model):
     description = models.CharField(default="This is the description area...", max_length=10000)
     location = models.CharField(choices=locatoins, max_length=200)
     display_picture = models.ImageField(upload_to='pics/stores')
+    # phone = models.
 
 
 
