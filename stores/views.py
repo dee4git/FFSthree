@@ -76,6 +76,7 @@ def add_week(request, plan_id):
             instance = form.save(commit=False)
             instance.plan = plan
             plan.visibility = True
+            plan.save()
             instance.save()
             return redirect("/")
     else:
