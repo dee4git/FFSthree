@@ -28,7 +28,7 @@
     </div>
     <div class="container">
         <br/>
-        <h2>Unpublished Plans</h2>
+        <h2>Published Plans</h2>
         <hr/>
         <div class="row">
             {% for i in plans %}
@@ -42,8 +42,8 @@
                             Price: {{ i.price }} BDT</p>
                         <img class="card-img-top" src="{{ i.photo_1.url }}" alt="No image found!"/>
                         <div class="card-body" align="middle">
-                            <a href= {% url 'add_week' i.id %} class="text-decoration-none" >
-                                <button type="button" class="btn btn-outline-success">Publish This Plan</button>
+                            <a href= {% url 'update_plan' i.id %} class="text-decoration-none" >
+                                <button type="button" class="btn btn-outline-success">Edit This Plan</button>
                             </a>
                         </div>
                     </div>

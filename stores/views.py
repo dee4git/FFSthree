@@ -11,6 +11,23 @@ from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         UserPassesTestMixin)
 
 
+def update_food(request, food_id):
+    food = FoodDetail.objects.get(pk=food_id)
+    store = food.store
+    if request.method == "POST":
+        form = forms.FoodForm(request.POST or None, request.FILES, instance=food)
+        if form.is_valid():
+            form.save()
+            return manage_food(request, store.id)
+
+    else:
+        form = forms.FoodForm(instance=food)
+    return render(request, 'add_food.html',
+                  {"form": form,
+                   },
+                  )
+
+
 def delete_food(request, food_id):
     food = FoodDetail.objects.get(pk=food_id)
     store = food.store
@@ -56,10 +73,7 @@ def add_week(request, plan_id):
     if request.method == "POST" or "GET":
         form = forms.WeekForm(request.POST, request.FILES)
         if form.is_valid():
-            print('Form is valid.')
-            print(form)
             instance = form.save(commit=False)
-            plan = Plan.objects.get(pk=plan_id)
             instance.plan = plan
             plan.visibility = True
             instance.save()
@@ -75,6 +89,30 @@ def add_week(request, plan_id):
                    "confirm": confirm,
                    "confirmation": confirmation,
                    "plan_id": plan_id,
+                   },
+                  )
+
+
+def update_plan(request, plan_id):
+    top = "Edit your store"
+    confirm = "Confirm"
+    confirmation = "Update Plan?"
+    cancel = "Cancel"
+    up = Plan.objects.get(pk=plan_id)
+    if request.method == "POST":
+        form = forms.PlanForm(request.POST or None, request.FILES, instance=up)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    else:
+        form = forms.PlanForm(instance=up)
+    return render(request, 'create.html',
+                  {"form": form,
+                   "top": top,
+                   "cancel": cancel,
+                   "confirm": confirm,
+                   "confmsg": confirmation,
                    },
                   )
 
@@ -109,6 +147,17 @@ def manage_plans(request, store_id):
     store = Store.objects.get(pk=store_id)
     plans = Plan.objects.filter(store=store, visibility=False)
     return render(request, 'manage_plans.html', {
+        "store": store,
+        "plans": plans,
+    })
+
+
+def published_plans(request, store_id):
+    """This function handles the published plans"""
+
+    store = Store.objects.get(pk=store_id)
+    plans = Plan.objects.filter(store=store, visibility=True)
+    return render(request, 'published_plans.html', {
         "store": store,
         "plans": plans,
     })

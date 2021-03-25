@@ -26,7 +26,7 @@
                                     <tr>
                                         <th scope="col">{{ i.name }}</th>
                                         <th class="text-right" scope="col">
-                                            <a href= {% url 'working'  %} class="text-decoration-none">
+                                            <a href= {% url 'update_food' i.id  %} class="text-decoration-none">
                                                 <i class='fa fa-edit'></i> </a>
                                             <a href= {% url 'delete_food' i.id %} class="text-decoration-none">
                                                 <i class="fa fa-close"></i></a></th>
