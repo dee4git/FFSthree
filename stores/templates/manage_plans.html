@@ -1,0 +1,45 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="jumbotron d-flex align-items-center">
+        <div class="container">
+            <h2 align="middle">Welcome to plan manager of {{ store.name }} </h2>
+            <a href= {% url 'home' %} class="text-decoration-none" >
+                <div class="row justify-content-center align-self-center">
+                    <br>
+                </div></a>
+            <div class="row justify-content-center align-self-center">
+                <button type="button" class="btn btn-outline-primary">Published Plans</button>
+                &nbsp;
+                &nbsp;
+                <button type="button" class="btn btn-outline-secondary">Unpublished Plans</button>
+            </div></div></div>
+    <div class="container">
+        <br/>
+        <h2>Unpublished Plans</h2>
+        <hr/>
+        <div class="row">
+            {% for i in plans %}
+
+                <div class="col-md-3">
+                    <div class="card mb-3 shadow">
+                        <a href="{% url 'view_store' i.id %}" class="text-decoration-none">
+                            <h3 class="card-text" > &nbsp{{ i.name }}</h3></a>
+                        <p>&nbsp
+                            <i class="fa fa-map-marker" style="font-size:20px"></i>
+                            Price: {{ i.price }} BDT</p>
+                        <img class="card-img-top" src="{{ i.photo_1.url }}" alt="No image found!"/>
+                        <div class="card-body" align="middle">
+                            <a href= {% url 'add_week' i.id %} class="text-decoration-none" >
+                                <button type="button" class="btn btn-outline-success">Publish This Plan</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

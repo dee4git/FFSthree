@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% extends 'navbar.html' %}
+{% block content %}
+    <div class="container">
+        <br/>
+        <table class="table table-borderless">
+            <thead>
+            <tr>
+                <th scope="col">All Foods You serve</th>
+                <th class="text-right" scope="col">
+                    <a href= {% url 'add_food' store_id %} class="text-decoration-none">
+                        Add Food</a></th>
+            </tr>
+            </thead>
+        </table>
+        <hr/>
+        <div class="row">
+            {% for i in foods %}
+
+                <div class="col-md-3">
+                    <div class="card mb-3 shadow">
+                        <div class="card" style="width: 17rem">
+                            <div class="card-body">
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ i.name }}</th>
+                                        <th class="text-right" scope="col">
+                                            <a href= {% url 'working'  %} class="text-decoration-none">
+                                                <i class='fa fa-edit'></i> </a>
+                                            <a href= {% url 'delete_food' i.id %} class="text-decoration-none">
+                                                <i class="fa fa-close"></i></a></th>
+                                    </tr></thead></table>
+                                {#                                <h5 class="card-title" class="text-primary" >{{ i.name}}#}
+                                {##}
+                                {#                                     <i class='fa fa-edit'></i>  <i class="fa fa-close"></i>#}
+                                {##}
+                                {#                                </h5>#}
+                                <p class="card-text">
+                                    Amount: {{ i.amount }}<br>
+                                    Calorie: {{ i.calorie }}<br>
+                                    Category: {{ i.category }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

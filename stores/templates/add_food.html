@@ -1,0 +1,41 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'add_food.css' %}">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <h2 class="active"> Add food</h2>
+            <form method="POST" >
+                {% csrf_token %}
+<table class="table table-borderless">
+                    <thead>
+                    <tr>
+                        <th scope="col">                {{ form.name.label_tag }}</th>
+                        <th scope="col">                {{ form.name }}
+                        </th>
+
+                    </tr>
+                    <tr>
+                        <th scope="col">                {{ form.amount.label_tag }}</th>
+                        <th scope="col">                {{ form.amount }}
+                        </th>
+
+                    </tr><tr>
+                        <th scope="col">                {{ form.calorie.label_tag }}</th>
+                        <th scope="col">                {{ form.calorie }}
+                        </th>
+
+                    </tr><tr>
+                        <th scope="col">                {{ form.category.label_tag }}</th>
+                        <th scope="col">                {{ form.category }}
+                        </th>
+
+                    </tr>
+                    </thead>
+                </table>
+                <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -5,10 +5,113 @@ from django.shortcuts import render, redirect
 
 from rates.models import StoreRating
 from . import forms
-from .models import Store
+from .models import Store, Plan, FoodDetail
 # from plans.models import Product
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         UserPassesTestMixin)
+
+
+def delete_food(request, food_id):
+    food = FoodDetail.objects.get(pk=food_id)
+    store = food.store
+    food.delete()
+    return manage_food(request, store.id)
+
+
+def manage_food(request, store_id):
+    foods = FoodDetail.objects.filter(store=Store.objects.get(pk=store_id))
+    return render(request, 'all_foods.html', {
+        'foods': foods,
+        'store_id': store_id,
+    })
+
+
+def add_food(request, store_id):
+    if request.method == "POST" or "GET":
+        form = forms.FoodForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            store = Store.objects.get(pk=store_id)
+            instance.store = store
+            instance.save()
+            return manage_food(request, store_id)
+    else:
+        form = forms.FoodForm()
+
+    return render(request, 'add_food.html',
+                  {"form": form,
+                   },
+                  )
+
+
+def add_week(request, plan_id):
+    top = "Food 1 is mandatory you may leave the rest blank"
+    confirm = "Confirm"
+    confirmation = "Create Week?"
+    cancel = "Cancel"
+    print('plan found', Plan.objects.get(pk=plan_id))
+    plan = Plan.objects.get(pk=plan_id)
+    store = Store.objects.filter(plan=plan)
+
+    if request.method == "POST" or "GET":
+        form = forms.WeekForm(request.POST, request.FILES)
+        if form.is_valid():
+            print('Form is valid.')
+            print(form)
+            instance = form.save(commit=False)
+            plan = Plan.objects.get(pk=plan_id)
+            instance.plan = plan
+            plan.visibility = True
+            instance.save()
+            return redirect("/")
+    else:
+        print('not valid yet')
+        form = forms.WeekForm()
+
+    return render(request, 'create_week.html',
+                  {"form": form,
+                   "top": top,
+                   "cancel": cancel,
+                   "confirm": confirm,
+                   "confirmation": confirmation,
+                   "plan_id": plan_id,
+                   },
+                  )
+
+
+def add_plan(request, store_id):
+    top = "Create your Plan"
+    confirm = "Confirm"
+    confirmation = "Create Plan?"
+    cancel = "Cancel"
+    if request.method == "POST":
+        form = forms.PlanForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.store = Store.objects.get(pk=store_id)
+            instance.save()
+            return redirect("/")
+    else:
+        form = forms.PlanForm()
+    return render(request, 'create.html',
+                  {"form": form,
+                   "top": top,
+                   "cancel": cancel,
+                   "confirm": confirm,
+                   "confirmation": confirmation,
+                   },
+                  )
+
+
+def manage_plans(request, store_id):
+    """This function handles the unpublished plans"""
+
+    store = Store.objects.get(pk=store_id)
+    plans = Plan.objects.filter(store=store, visibility=False)
+    return render(request, 'manage_plans.html', {
+        "store": store,
+        "plans": plans,
+    })
 
 
 def create_store(request):
@@ -30,7 +133,7 @@ def create_store(request):
                    "top": top,
                    "cancel": cancel,
                    "confirm": confirm,
-                   "confmsg": confirmation,
+                   "confirmation": confirmation,
                    },
                   )
 
