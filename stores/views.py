@@ -60,21 +60,41 @@ def add_food(request, store_id):
                    },
                   )
 
+def count_calorie(data):
+    """This functtion counts the total calore while creating week for a plan"""
+    print('here')
+    foods=[]
+    calories = []
+    for i,j in data.items():
+        foods.append(j)
+    for i in foods:
+        if i is None:
+            pass
+        else:
+            calories.append(i.calorie)
+
+    # print('Final calories', sum(calories))
+    return round(sum(calories),2)
 
 def add_week(request, plan_id):
     top = "Food 1 is mandatory you may leave the rest blank"
     confirm = "Confirm"
     confirmation = "Create Week?"
     cancel = "Cancel"
-    print('plan found', Plan.objects.get(pk=plan_id))
     plan = Plan.objects.get(pk=plan_id)
-    store = Store.objects.filter(plan=plan)
 
     if request.method == "POST" or "GET":
         form = forms.WeekForm(request.POST, request.FILES)
         if form.is_valid():
+
             instance = form.save(commit=False)
             instance.plan = plan
+            plan.visibility = True
+            data = form.cleaned_data
+
+            # coounting total calories and updating it
+            calories = count_calorie(data)
+            plan.total_estimated_calorie = calories
             plan.visibility = True
             plan.save()
             instance.save()
@@ -268,6 +288,40 @@ def view_store(request, store_id):
                                                      "stars": stars,
                                                      # "plans": plans,
                                                      })
+
+
+def view_plan(request, plan_id):
+    status = 0  # checks if the current user is the owner
+    rated = 0  # checks if the user has already rated the store
+    plan = Plan.objects.get(pk=plan_id)
+    # current_rating = get_rating(request, plan_id)
+    # rating = current_rating[0]  # zeroth element contain the avg rating of the shop
+    # people = current_rating[2]  # number of people rated
+    # stars = current_rating[3]  # number of full star
+    # if plan.owner == request.user:
+    #     status = 1
+    try:
+        if PlanRating.objects.get(plan=plan_id, user=request.user):
+            rated = 1
+            your_review = PlanRating.objects.get(plan=plan_id, user=request.user)
+            your_stars = get_full_star(your_review.rating)
+            return render(request, "detail_plan.html", {"plan": plan,
+                                                        "status": status,
+                                                        "rated": rated,
+                                                        # "rating": rating,
+                                                        # "people": people,
+                                                        # "your_rating": your_stars,
+                                                        # "stars": stars,
+                                                        })
+    except:
+        return render(request, "detail_plan.html", {"plan": plan,
+                                                    "status": status,
+                                                    "rated": rated,
+                                                    # "rating": rating,
+                                                    # "people": people,
+                                                    # "stars": stars,
+                                                    # "plans": plans,
+                                                    })
 
 
 def delete_store(request, store_id):
