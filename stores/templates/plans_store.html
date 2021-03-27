@@ -1,0 +1,40 @@
+<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<!DOCTYPE html>
+{% extends 'detail_store.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css"
+    href="{% static 'comments.css' %}">
+{% block rating %}
+    <div class="container">
+        <br/>
+        <h2>Published Plans</h2>
+        <hr/>
+        <div class="row">
+            {% for i in plans %}
+
+                <div class="col-md-3">
+                    <div class="card mb-3 shadow">
+                        <a href="{% url 'view_plan' i.id %}" class="text-decoration-none">
+                            <h3 class="card-text" > &nbsp{{ i.name }}</h3></a>
+                        <p>&nbsp
+
+                        <img class="card-img-top" src="{{ i.photo_1.url }}" alt="No image found!"/>
+                        <div class="card-body" align="left">
+                           <i  style="font-size:20px"></i>
+                            Price: {{ i.price }} BDT <br>
+                            Calorie: {{ i.total_estimated_calorie }}
+                        </p>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

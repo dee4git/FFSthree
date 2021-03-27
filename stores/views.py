@@ -14,18 +14,19 @@ from django.contrib.auth.mixins import (LoginRequiredMixin,
 def update_food(request, food_id):
     food = FoodDetail.objects.get(pk=food_id)
     store = food.store
-    if request.method == "POST":
-        form = forms.FoodForm(request.POST or None, request.FILES, instance=food)
-        if form.is_valid():
-            form.save()
-            return manage_food(request, store.id)
+    if store.owner == request.user:
+        if request.method == "POST":
+            form = forms.FoodForm(request.POST or None, request.FILES, instance=food)
+            if form.is_valid():
+                form.save()
+                return manage_food(request, store.id)
 
-    else:
-        form = forms.FoodForm(instance=food)
-    return render(request, 'add_food.html',
-                  {"form": form,
-                   },
-                  )
+        else:
+            form = forms.FoodForm(instance=food)
+        return render(request, 'add_food.html',
+                      {"form": form,
+                       },
+                      )
 
 
 def delete_food(request, food_id):
@@ -82,7 +83,6 @@ def add_week(request, plan_id):
     confirmation = "Create Week?"
     cancel = "Cancel"
     plan = Plan.objects.get(pk=plan_id)
-
     if request.method == "POST" or "GET":
         form = forms.WeekForm(request.POST, request.FILES)
         if form.is_valid():
@@ -100,7 +100,6 @@ def add_week(request, plan_id):
             instance.save()
             return redirect("/")
     else:
-        print('not valid yet')
         form = forms.WeekForm()
 
     return render(request, 'create_week.html',
@@ -120,22 +119,23 @@ def update_plan(request, plan_id):
     confirmation = "Update Plan?"
     cancel = "Cancel"
     up = Plan.objects.get(pk=plan_id)
-    if request.method == "POST":
-        form = forms.PlanForm(request.POST or None, request.FILES, instance=up)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
+    if up.store.owner == request.user:
+        if request.method == "POST":
+            form = forms.PlanForm(request.POST or None, request.FILES, instance=up)
+            if form.is_valid():
+                form.save()
+                return redirect('/')
 
-    else:
-        form = forms.PlanForm(instance=up)
-    return render(request, 'create.html',
-                  {"form": form,
-                   "top": top,
-                   "cancel": cancel,
-                   "confirm": confirm,
-                   "confmsg": confirmation,
-                   },
-                  )
+        else:
+            form = forms.PlanForm(instance=up)
+        return render(request, 'create.html',
+                      {"form": form,
+                       "top": top,
+                       "cancel": cancel,
+                       "confirm": confirm,
+                       "confmsg": confirmation,
+                       },
+                      )
 
 
 def add_plan(request, store_id):
@@ -214,22 +214,23 @@ def update_store(request, store_id):
     confirmation = "Update Store?"
     cancel = "Cancel"
     up = Store.objects.get(pk=store_id)
-    if request.method == "POST":
-        form = forms.Form(request.POST or None, request.FILES, instance=up)
-        if form.is_valid():
-            form.save()
-            return view_store(request, store_id)
+    if up.owner == request.user:
+        if request.method == "POST":
+            form = forms.Form(request.POST or None, request.FILES, instance=up)
+            if form.is_valid():
+                form.save()
+                return view_store(request, store_id)
 
-    else:
-        form = forms.Form(instance=up)
-    return render(request, 'create.html',
-                  {"form": form,
-                   "top": top,
-                   "cancel": cancel,
-                   "confirm": confirm,
-                   "confmsg": confirmation,
-                   },
-                  )
+        else:
+            form = forms.Form(instance=up)
+        return render(request, 'create.html',
+                      {"form": form,
+                       "top": top,
+                       "cancel": cancel,
+                       "confirm": confirm,
+                       "confmsg": confirmation,
+                       },
+                      )
 
 
 def get_full_star(rating):
@@ -256,47 +257,51 @@ def get_rating(request, store_id):
 
 
 def view_store(request, store_id):
-    status = 0  # checks if the current user is the owner
-    rated = 0  # checks if the user has already rated the store
-    store = Store.objects.get(pk=store_id)
-    current_rating = get_rating(request, store_id)
-    rating = current_rating[0]  # zeroth element contain the avg rating of the shop
-    people = current_rating[2]  # number of people rated
-    stars = current_rating[3]  # number of full star
-    if store.owner == request.user:
-        status = 1
     try:
-        if StoreRating.objects.get(store=store_id, user=request.user):
-            rated = 1
-            your_review = StoreRating.objects.get(store=store_id, user=request.user)
-            your_stars = get_full_star(your_review.rating)
+        # will show plans if there is any
+        return store_plan(request, store_id)
+    except:
+        # will just view the store if there is no plan
+        status = 0  # checks if the current user is the owner
+        rated = 0  # checks if the user has already rated the store
+        store = Store.objects.get(pk=store_id)
+        current_rating = get_rating(request, store_id)
+        rating = current_rating[0]  # zeroth element contain the avg rating of the shop
+        people = current_rating[2]  # number of people rated
+        stars = current_rating[3]  # number of full star
+        if store.owner == request.user:
+            status = 1
+        try:
+            if StoreRating.objects.get(store=store_id, user=request.user):
+                rated = 1
+                your_review = StoreRating.objects.get(store=store_id, user=request.user)
+                your_stars = get_full_star(your_review.rating)
+                return render(request, "detail_store.html", {"store": store,
+                                                             "status": status,
+                                                             "rated": rated,
+                                                             "rating": rating,
+                                                             "people": people,
+                                                             "your_rating": your_stars,
+                                                             "stars": stars,
+                                                             # "plans": plans,
+                                                             })
+        except:
             return render(request, "detail_store.html", {"store": store,
                                                          "status": status,
                                                          "rated": rated,
                                                          "rating": rating,
                                                          "people": people,
-                                                         "your_rating": your_stars,
                                                          "stars": stars,
                                                          # "plans": plans,
                                                          })
-    except:
-        return render(request, "detail_store.html", {"store": store,
-                                                     "status": status,
-                                                     "rated": rated,
-                                                     "rating": rating,
-                                                     "people": people,
-                                                     "stars": stars,
-                                                     # "plans": plans,
-                                                     })
 
 
 def view_plan(request, plan_id):
+
     status = 0  # checks if the current user is the owner
     rated = 0  # checks if the user has already rated the store
     plan = Plan.objects.get(pk=plan_id)
     week = Week.objects.get(plan = plan)
-    print('w', week)
-    print('p', plan)
     # current_rating = get_rating(request, plan_id)
     # rating = current_rating[0]  # zeroth element contain the avg rating of the shop
     # people = current_rating[2]  # number of people rated
@@ -381,3 +386,49 @@ def store_review(request, store_id):
                                                        "reviews": reviews
                                                        # "plans": plans,
                                                        })
+
+
+def store_plan(request, store_id):
+    status = 0  # checks if the current user is the owner
+    rated = 0  # checks if the user has already rated the store
+    store = Store.objects.get(pk=store_id)
+    try:
+        plans = Plan.objects.filter(store = store)
+    except:
+        view_store(request,store_id)
+    current_rating = get_rating(request, store_id)
+    rating = current_rating[0]  # zeroth element contain the avg rating of the shop
+    people = current_rating[2]  # number of people rated
+    stars = current_rating[3]  # number of full star
+    # rating machine begins
+    reviews = current_rating[1]  # 2nd element has all the ratings of a store
+    if store.owner == request.user:
+        status = 1
+    try:
+        # enters is the user has rated the store already
+        if StoreRating.objects.get(store=store_id, user=request.user):
+            rated = 1
+            your_review = StoreRating.objects.get(store=store_id, user=request.user)
+            your_stars = get_full_star(your_review.rating)
+            return render(request, "plans_store.html", {"store": store,
+                                                           "status": status,
+                                                           "rated": rated,
+                                                           "rating": rating,
+                                                           "people": people,
+                                                           "stars": stars,
+                                                           "your_rating": your_stars,
+                                                           "reviews": reviews,
+                                                           "plans": plans,
+                                                           })
+    except:
+        # enters is the user has not rated the store
+        return render(request, "plans_store.html", {"store": store,
+                                                       "status": status,
+                                                       "rated": rated,
+                                                       "rating": rating,
+                                                       "people": people,
+                                                       "stars": stars,
+                                                       "reviews": reviews,
+                                                       "plans": plans,
+                                                       })
+

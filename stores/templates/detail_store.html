@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 {% extends 'navbar.html' %}
 {% load static %}
+<link rel="stylesheet" type="text/css"
+    href="{% static 'detail_store.css' %}">
+
 {% block content %}
 
     <html lang="en">
@@ -9,7 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png" />
         <meta name="description" content="Demo of Bootstrap 4 user profile card widget to show different styles of user card created with default card and other components.">
-        <title>Bootstrap 4 User Profile Card » WebNots</title>
+        <title>FFS | Store View</title>
+
         <!-- CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -33,7 +37,7 @@
                 <div class="card card-inverse" style="background-color: #333; border-color: #333;">
                     <div class="card-block">
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 text-center">
+                            <div class="col-md-2 col-sm-2 text-left">
                                 <img class="img-fluid"
                                      src="{{ store.display_picture.url}}" alt="" class="btn-md">
                             </div>
@@ -48,8 +52,8 @@
                                             <span class="badge bg-primary">Edit Store</span></a>
                                         <a href= {% url 'manage_plans' store.id %} class="text-decoration-none">
                                             <span class="badge bg-success">Manage Plans</span></a>
-                                        <a href= {% url 'add_food' store.id %} class="text-decoration-none">
-                                            <span class="badge bg-info">Add Food </span></a>
+{#                                        <a href= {% url 'add_food' store.id %} class="text-decoration-none">#}
+{#                                            <span class="badge bg-info">Add Food </span></a>#}
                                         <a href= {% url 'manage_food' store.id %} class="text-decoration-none">
                                             <span class="badge bg-info">Manage Food </span></a>
                                         <a onclick="return confirm('Are you sure you want to create this store?');"
@@ -61,8 +65,8 @@
                             <div class="col-md-4 col-sm-4 text-center">
                                 <h2><strong> 5.2K </strong></h2>
                                 <p><small>Fans</small></p>
-                                <a href= {% url 'view_store' store.id %} class="text-decoration-none">
-                                    <button class="btn btn-primary btn-block btn-md"><span class="fa fa-facebook-square"></span> Plans </button>
+                                <a href= {% url 'store_plan' store.id %} class="text-decoration-none">
+                                    <button class="btn btn-primary btn-block btn-md"><span></span> Plans </button>
                                 </a></div>
                             {% if rated == 0 %}
                                 <div class="col-md-4 col-sm-4 text-center">
@@ -71,7 +75,7 @@
 
                                     <a href= {% url 'rate_store' store.id %} class="text-decoration-none" >
                                         <button class="btn btn-success btn-block btn-md">
-                                        <span class="fa fa-twitter-square">
+                                        <span>
                                         </span>Rate and Review </button></a>
                                 </div>
                             {% else %}
@@ -81,15 +85,14 @@
 
                                     <a href= {% url 'edit_store_rating' store.id %} class="text-decoration-none" >
                                         <button class="btn btn-success btn-block btn-md">
-                                        <span class="fa fa-twitter-square">
-                                        </span>Edit your rating </button></a>
+                                        Edit your rating </button></a>
                                 </div>
                             {% endif %}
                             <div class="col-md-4 col-sm-4 text-center">
                                 <h2><strong>Overall Rating</strong></h2>
                                 <p><small>{{ stars }} &nbsp;&nbsp;{{ rating }} (👥 {{ people }} )</small></p>
                                 <a href= {% url 'store_review' store.id %} class="text-decoration-none" >
-                                    <button type="button" class="btn btn-danger btn-block btn-md"><span class="fa fa-google-plus-square"></span> Reviews </button>
+                                    <button type="button" class="btn btn-danger btn-block btn-md"> Reviews </button>
                                 </a>
                             </div>
                         </div>
@@ -108,7 +111,14 @@
 
     <div class="container-fluid">
         {% block rating %}
-            <p>expecting content here</p>
-        {% endblock %}
+
+<div class="jumbotron d-flex align-items-center">
+        <div class="container">
+            <h2 align="middle">No plans in this store yet!</h2>
+            <a href= {% url 'home' %} class="text-decoration-none" >
+            <div class="row justify-content-center align-self-center">
+                    Go Home
+            </div></a>
+        </div></div>        {% endblock %}
     </div>
 {% endblock %}
