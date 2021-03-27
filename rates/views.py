@@ -76,4 +76,4 @@ def rate_store(request, store_id):
                                                    "cancel": cancel,
                                                    "store_id": store_id})
     else:
-        return view_store(request,store_id)
+        return view_store(request, store_id)
