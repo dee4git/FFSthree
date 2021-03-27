@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 from rates.models import StoreRating
 from . import forms
-from .models import Store, Plan, FoodDetail
+from .models import Store, Plan, FoodDetail, Week
 # from plans.models import Product
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         UserPassesTestMixin)
@@ -294,27 +294,33 @@ def view_plan(request, plan_id):
     status = 0  # checks if the current user is the owner
     rated = 0  # checks if the user has already rated the store
     plan = Plan.objects.get(pk=plan_id)
+    week = Week.objects.get(plan = plan)
+    print('w', week)
+    print('p', plan)
     # current_rating = get_rating(request, plan_id)
     # rating = current_rating[0]  # zeroth element contain the avg rating of the shop
     # people = current_rating[2]  # number of people rated
     # stars = current_rating[3]  # number of full star
     # if plan.owner == request.user:
     #     status = 1
-    try:
-        if PlanRating.objects.get(plan=plan_id, user=request.user):
-            rated = 1
-            your_review = PlanRating.objects.get(plan=plan_id, user=request.user)
-            your_stars = get_full_star(your_review.rating)
-            return render(request, "detail_plan.html", {"plan": plan,
-                                                        "status": status,
-                                                        "rated": rated,
-                                                        # "rating": rating,
-                                                        # "people": people,
-                                                        # "your_rating": your_stars,
-                                                        # "stars": stars,
-                                                        })
-    except:
-        return render(request, "detail_plan.html", {"plan": plan,
+    # try:
+    #     if PlanRating.objects.get(plan=plan_id, user=request.user):
+    #         rated = 1
+    #         your_review = PlanRating.objects.get(plan=plan_id, user=request.user)
+    #         your_stars = get_full_star(your_review.rating)
+    #         return render(request, "detail_plan.html", {
+    #                                                     "plan": plan,
+    #                                                     "week": week,
+    #                                                     "status": status,
+    #                                                     "rated": rated,
+    #                                                     # "rating": rating,
+    #                                                     # "people": people,
+    #                                                     # "your_rating": your_stars,
+    #                                                     # "stars": stars,
+    #                                                     })
+    # except:
+    return render(request, "detail_plan.html", {"plan": plan,
+                                                    "week": week,
                                                     "status": status,
                                                     "rated": rated,
                                                     # "rating": rating,

@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 {% extends 'navbar.html' %}
 {% load static %}
+<link rel="stylesheet" type="text/css"
+    href="{% static 'detail_plan.css' %}">
+
 {% block content %}
 
-    <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+    <div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10">
+            <div class="row p-2 bg-white border rounded">
+                <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ plan.photo_1.url}}" ></div>
+                <div class="col-md-6 mt-1">
+                    <h5>{{ plan.name }}</h5>
+                    <div class="d-flex flex-row">
+                        <div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><span></span>
+                    </div>
+                    <div class="mt-1 mb-1 spec-1"><span>Seat Remaining: {{ plan.capacity }}</span>
+                        <span class="dot"></span><br>
+                        <span>Calorie: {{ plan.total_estimated_calorie  }}<br></span></div>
+                </div>
+                <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                    <div class="d-flex flex-row align-items-center">
+                        <h4 class="mr-1">BDT {{ plan.price }}</h4></span>
+                    </div>
+                    <h6 class="text-success">Free shipping</h6>
+                    <div class="d-flex flex-column mt-4"><button class="btn btn-outline-primary btn-sm mt-2" type="button">Enroll</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- End Content -->
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -46,4 +44,123 @@
             <p>expecting content here</p>
         {% endblock %}
     </div>
+
+<div align="middle" class="alert alert-success" role="alert">
+            For Launch
+        </div>
+<table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Food</th>
+                <th scope="col">Saturday</th>
+                <th scope="col">Sunday</th>
+                <th scope="col">Monday</th>
+                <th scope="col">Tuesday</th>
+                <th scope="col">Wednesday</th>
+                <th scope="col">Thursday</th>
+                <th scope="col">Friday</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>{{ week.saturday_day_food_1.name }} - {{ week.saturday_day_food_1.amount }} </td>
+                <td>{{ week.sunday_day_food_1.name }} - {{ week.sunday_day_food_1.amount }}</td>
+                <td>{{ week.monday_day_food_1.name }}</td>
+                <td>{{ week.tuesday_day_food_1.name }}</td>
+                <td>{{ week.wednesday_day_food_1.name }}</td>
+                <td>{{ week.thursday_day_food_1.name }}</td>
+                <td>{{ week.friday_day_food_1.name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>{{ week.saturday_day_food_2.name }}</td>
+                <td>{{ week.sunday_day_food_2.name }}</td>
+                <td>{{ week.monday_day_food_2.name }}</td>
+                <td>{{ week.tuesday_day_food_2.name }}</td>
+                <td>{{ week.wednesday_day_food_2.name }}</td>
+                <td>{{ week.thursday_day_food_2.name }}</td>
+                <td>{{ week.friday_day_food_2.name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>{{ week.saturday_day_food_3.name }}</td>
+                <td>{{ week.sunday_day_food_3.name }}</td>
+                <td>{{ week.monday_day_food_3.name }}</td>
+                <td>{{ week.tuesday_day_food_3.name }}</td>
+                <td>{{ week.wednesday_day_food_3.name }}</td>
+                <td>{{ week.thursday_day_food_3.name }}</td>
+                <td>{{ week.friday_day_food_3.name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td>{{ week.saturday_day_food_4.name }}</td>
+                <td>{{ week.sunday_day_food_4.name }}</td>
+                <td>{{ week.monday_day_food_4.name }}</td>
+                <td>{{ week.tuesday_day_food_4.name }}</td>
+                <td>{{ week.wednesday_day_food_4.name }}</td>
+                <td>{{ week.thursday_day_food_4.name }}</td>
+                <td>{{ week.friday_day_food_4.name }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div align="middle" class="alert alert-success" role="alert">
+            For Dinner
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Food</th>
+                <th scope="col">Saturday</th>
+                <th scope="col">Sunday</th>
+                <th scope="col">Monday</th>
+                <th scope="col">Tuesday</th>
+                <th scope="col">Wednesday</th>
+                <th scope="col">Thursday</th>
+                <th scope="col">Friday</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>{{ week.saturday_night_food_1.name }}</td>
+                <td>{{ week.sunday_night_food_1.name }}</td>
+                <td>{{ week.monday_night_food_1.name }}</td>
+                <td>{{ week.tuesday_night_food_1.name }}</td>
+                <td>{{ week.wednesday_night_food_1.name }}</td>
+                <td>{{ week.thursday_night_food_1.name }}</td>
+                <td>{{ week.friday_night_food_1.name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>{{ week.saturday_night_food_2.name }}</td>
+                <td>{{ week.sunday_night_food_2.name }}</td>
+                <td>{{ week.monday_night_food_2.name }}</td>
+                <td>{{ week.tuesday_night_food_2.name }}</td>
+                <td>{{ week.wednesday_night_food_2.name }}</td>
+                <td>{{ week.thursday_night_food_2.name }}</td>
+                <td>{{ week.friday_night_food_2.name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>{{ week.saturday_night_food_3.name }}</td>
+                <td>{{ week.sunday_night_food_3.name }}</td>
+                <td>{{ week.monday_night_food_3.name }}</td>
+                <td>{{ week.tuesday_night_food_3.name }}</td>
+                <td>{{ week.wednesday_night_food_3.name }}</td>
+                <td>{{ week.thursday_night_food_3.name }}</td>
+                <td>{{ week.friday_night_food_3.name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td>{{ week.saturday_night_food_4.name }}</td>
+                <td>{{ week.sunday_night_food_4.name }}</td>
+                <td>{{ week.monday_night_food_4.name }}</td>
+                <td>{{ week.tuesday_night_food_4.name }}</td>
+                <td>{{ week.wednesday_night_food_4.name }}</td>
+                <td>{{ week.thursday_night_food_4.name }}</td>
+                <td>{{ week.friday_night_food_4.name }}</td>
+            </tr>
+            </tbody>
+        </table>
 {% endblock %}
