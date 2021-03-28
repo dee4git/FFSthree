@@ -27,7 +27,9 @@ class Enrolment(models.Model):
     user = models.ForeignKey(ExtendedUser, default=None, on_delete=models.CASCADE)
     plan = models.ForeignKey(Plan, default=None, on_delete=models.CASCADE)
     start_date = models.DateField()
-    duration = models.IntegerField(validators=[MinValueValidator(3), MaxValueValidator(100)])
+    # duration = models.IntegerField()
+    end_date = models.DateField(blank=True, null=True)
     special_note = models.CharField(default='Call my brother if I dont pick up', max_length=500)
-    pause = models.BooleanField(default=False)
+    day_meal_count = models.IntegerField(default=1)
+    night_meal_count = models.IntegerField(default=1)
 

@@ -1,0 +1,77 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    {% load static %}
+    <div class="select2-container">
+        <div class="container mt-5 mb-5">
+            <div class="d-flex justify-content-center row">
+                <div class="col-md-10">
+                    <div class="row p-2 bg-white border rounded">
+                        <div class="col-md-2 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ extended_user.photo.url}}" ></div>
+                        <div class="col-md-6 mt-1">
+                            <h2>Hello, {{ extended_user.name }}!</h2>
+
+                            <div class="d-flex flex-row">
+                                <div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><span></span>
+                            </div>
+                            <div class="mt-1 mb-1 spec-1"><span>Phone: {{ extended_user.phone }}</span>
+                                <span class="dot"></span><br>
+                                <span>Location: {{ extended_user.location  }}<br>
+                        <span>Address: {{ extended_user.address  }}<br>
+                        </span>
+                        </span>
+                            </div>
+                        </div>
+                        <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                            <br>
+                            <div class="d-flex flex-row align-items-center" align="middle">
+                                <h5>Balance: {{ extended_user.balance }} BDT</h5></span>
+                            </div>
+                            {#                    <div class="d-flex flex-column mt-4" >#}
+                            <a href= {% url 'add_money' %} class="text-decoration-none" >
+                                <button class="btn btn-outline-primary btn-sm mt-2" type="button">Add Money</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Enrolled Plan</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Edit Date</th>
+            <th scope="col">Day/Night Meal</th>
+            <th scope="col">Meal Confirmation</th>
+            <th scope="col">Enroll Out</th>
+
+
+
+
+        </tr>
+        </thead>
+        {%  for i in enrolments %}
+            <tbody>
+            <tr>
+                <td>{{ i.plan.name }}</td>
+                <td>{{ i.start_date }}</td>
+                <td>{{ i.end_date }}</td>
+                <td><a href= {% url 'update_enrolment' i.id %} class="text-decoration-none" >
+                    Click</a></td>
+                <td>{{ i.day_meal_count }} / {{ i.night_meal_count }} &nbsp;
+                    <a href= {% url 'update_meal_count' i.id %} class="text-decoration-none" >
+                        Change</a></td>
+                </td>
+                <td><a href= {% url 'confirm_meal' i.id %} class="text-decoration-none" >
+                    click</a>
+                </td>
+
+                <td><a href= {% url 'delete_enrolment' i.id %} class="text-decoration-none" >
+                    click</a></td>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+
+{% endblock %}

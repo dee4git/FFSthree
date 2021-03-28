@@ -1,0 +1,24 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'add_food.css' %}">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <h2 class="active"> Enter amount you want to add.</h2>
+            <form method="POST" >
+                {% csrf_token %}
+                <table class="table table-borderless">
+                    <thead>
+                    <tr>
+                        <th scope="col">                {{ form.balance.label_tag }}</th>
+                        <th scope="col">                {{ form.balance }}
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+                <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+{% endblock %}

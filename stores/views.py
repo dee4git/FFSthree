@@ -393,7 +393,7 @@ def store_plan(request, store_id):
     rated = 0  # checks if the user has already rated the store
     store = Store.objects.get(pk=store_id)
     try:
-        plans = Plan.objects.filter(store = store)
+        plans = Plan.objects.filter(store = store, visibility= True)
     except:
         view_store(request,store_id)
     current_rating = get_rating(request, store_id)
