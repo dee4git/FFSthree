@@ -33,6 +33,10 @@ def confirm_meal(request, e_id):
     extended_user.balance -= price * total_meal
     if extended_user.balance > 0:
         extended_user.save()
+        owner = enrolment.plan.store.owner
+        owner = ExtendedUser.objects.get(user=owner)
+        owner.balance += price * total_meal
+        owner.save()
     return view_enrolments(request)
 
 
@@ -85,7 +89,7 @@ def create_enrolment(request, plan_id):
                     instance.user = extended_user
                     instance.plan = plan
                     instance.save()
-                    return redirect('/')
+                    return view_enrolments(request)
             else:
                 form = forms.EnrolmentForm()
             return render(request, 'create_enrolment.html',
