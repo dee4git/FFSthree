@@ -1,0 +1,64 @@
+{% extends 'navbar.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css"
+    href="{% static 'see_profile.css' %}">
+<aside class="profile-card">
+  <header>
+    <!-- here’s the avatar -->
+    <a target="_blank" href= {% url 'working' %}>
+      <img src="{{ extended_user.photo.url }}" class="hoverZoomLink">
+    </a>
+
+    <!-- the username -->
+    <h1>
+        {{extended_user.name}}    </h1>
+
+    <!-- and role or location -->
+    <h2>
+BMI: {{extended_user.bmi}}
+    </h2>
+
+  </header>
+
+  <!-- bit of a bio; who are you? -->
+  <div class="profile-bio">
+
+    <p>
+        Phone: {{extended_user.phone}}<br>
+        Location: {{extended_user.location}}<br>
+        Address: {{extended_user.address}}<br>
+
+    </p>
+      <br>
+       <a href= {% url 'edit_profile' %} class="text-decoration-none" >
+<button type="button" class="btn btn-outline-success">Edit Profile</button>
+       </a>
+  </div>
+
+  <!-- some social links to show off -->
+  <ul class="profile-social-links">
+    <li>
+      <a target="_blank" href="https://www.facebook.com/creativedonut">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a target="_blank" href="https://twitter.com/dropyourbass">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a target="_blank" href="https://github.com/vipulsaxena">
+        <i class="fa fa-github"></i>
+      </a>
+    </li>
+    <li>
+      <a target="_blank" href="https://www.behance.net/vipulsaxena">
+
+        <i class="fa fa-behance"></i>
+      </a>
+    </li>
+  </ul>
+</aside>
+{% endblock %}

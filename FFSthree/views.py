@@ -7,7 +7,6 @@ from stores.models import Store
 def home(request):
     """views the home page"""
     stores = Store.objects.all()
-
     return render(request, "home.html", {
         "stores": stores,
     })

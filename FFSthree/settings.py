@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'accounts',
     'stores',
+    'enrolments',
     'rates',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,6 +58,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates',
                  'accounts/templates',
+                 'stores/templates',
+                 'enrolments/templates',
                  ]
         ,
         'APP_DIRS': True,
@@ -66,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'enrolments.context_processors.extras'
             ],
         },
     },

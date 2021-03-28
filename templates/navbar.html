@@ -30,9 +30,15 @@
             <ul class="navbar-nav ml-auto">
 
             {% if user.is_authenticated %}
+                {% if extended_user == 1 %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'working' %}">Hi  {{user.username}}!</a>
+                    <a class="nav-link" href="{% url 'see_profile' %}">SEE PROFILE</a>
                 </li>
+                    {% else %}
+                    <li class="nav-item">
+                    <a class="nav-link" href="{% url 'set_profile' %}">SET PROFILE</a>
+                </li>
+                    {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">LOG OUT </a>
                 </li>
@@ -54,6 +60,6 @@
 {#nav bar ends here, content of the website begins#}
 <div class="container-fluid">
     {% block content %}
-        <p>expecting content here</p>
+
     {% endblock %}
 </div>
