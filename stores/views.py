@@ -84,10 +84,11 @@ def add_week(request, plan_id):
     confirmation = "Create Week?"
     cancel = "Cancel"
     plan = Plan.objects.get(pk=plan_id)
+    # foods = FoodDetail.objects.filter(store=plan.store)
     if request.method == "POST" or "GET":
-        form = forms.WeekForm(request.POST, request.FILES)
+        form = forms.WeekForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
-
+            ch = form.cleaned_data.get('choice')
             instance = form.save(commit=False)
             instance.plan = plan
             plan.visibility = True
@@ -101,7 +102,7 @@ def add_week(request, plan_id):
             instance.save()
             return redirect("/")
     else:
-        form = forms.WeekForm()
+        form = forms.WeekForm(user=request.user)
 
     return render(request, 'create_week.html',
                   {"form": form,

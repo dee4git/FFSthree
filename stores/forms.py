@@ -89,124 +89,133 @@ class WeekForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
         super(WeekForm, self).__init__(*args, **kwargs)
-        self.fields['saturday_day_food_1'].queryset = FoodDetail.objects.all()
+        """what happens here is we get all the stores under a user
+         then get the foods under those store in the foods variable
+         """
+        foods = FoodDetail.objects.none()
+        stores = Store.objects.filter(owner=self.user)
+        for i in stores:
+            foods |= FoodDetail.objects.filter(store=i)
+
+        self.fields['saturday_day_food_1'].queryset = foods
         self.fields['saturday_day_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['saturday_day_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['saturday_day_food_2'].queryset = foods
         self.fields['saturday_day_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['saturday_day_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['saturday_day_food_3'].queryset = foods
         self.fields['saturday_day_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['saturday_day_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['saturday_day_food_4'].queryset = foods
         self.fields['saturday_day_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['saturday_night_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['saturday_night_food_1'].queryset = foods
         self.fields['saturday_night_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['saturday_night_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['saturday_night_food_2'].queryset = foods
         self.fields['saturday_night_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['saturday_night_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['saturday_night_food_3'].queryset = foods
         self.fields['saturday_night_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['saturday_night_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['saturday_night_food_4'].queryset = foods
         self.fields['saturday_night_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
 
-        self.fields['sunday_day_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['sunday_day_food_1'].queryset = foods
         self.fields['sunday_day_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['sunday_day_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['sunday_day_food_2'].queryset = foods
         self.fields['sunday_day_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['sunday_day_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['sunday_day_food_3'].queryset = foods
         self.fields['sunday_day_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['sunday_day_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['sunday_day_food_4'].queryset = foods
         self.fields['sunday_day_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['sunday_night_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['sunday_night_food_1'].queryset = foods
         self.fields['sunday_night_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['sunday_night_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['sunday_night_food_2'].queryset = foods
         self.fields['sunday_night_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['sunday_night_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['sunday_night_food_3'].queryset = foods
         self.fields['sunday_night_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['sunday_night_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['sunday_night_food_4'].queryset = foods
         self.fields['sunday_night_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
 
-        self.fields['monday_day_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['monday_day_food_1'].queryset = foods
         self.fields['monday_day_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['monday_day_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['monday_day_food_2'].queryset = foods
         self.fields['monday_day_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['monday_day_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['monday_day_food_3'].queryset = foods
         self.fields['monday_day_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['monday_day_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['monday_day_food_4'].queryset = foods
         self.fields['monday_day_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['monday_night_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['monday_night_food_1'].queryset = foods
         self.fields['monday_night_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['monday_night_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['monday_night_food_2'].queryset = foods
         self.fields['monday_night_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['monday_night_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['monday_night_food_3'].queryset = foods
         self.fields['monday_night_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['monday_night_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['monday_night_food_4'].queryset = foods
         self.fields['monday_night_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
 
-        self.fields['tuesday_day_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['tuesday_day_food_1'].queryset = foods
         self.fields['tuesday_day_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['tuesday_day_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['tuesday_day_food_2'].queryset = foods
         self.fields['tuesday_day_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['tuesday_day_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['tuesday_day_food_3'].queryset = foods
         self.fields['tuesday_day_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['tuesday_day_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['tuesday_day_food_4'].queryset = foods
         self.fields['tuesday_day_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['tuesday_night_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['tuesday_night_food_1'].queryset = foods
         self.fields['tuesday_night_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['tuesday_night_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['tuesday_night_food_2'].queryset = foods
         self.fields['tuesday_night_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['tuesday_night_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['tuesday_night_food_3'].queryset = foods
         self.fields['tuesday_night_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['tuesday_night_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['tuesday_night_food_4'].queryset = foods
         self.fields['tuesday_night_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
 
-        self.fields['wednesday_day_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['wednesday_day_food_1'].queryset = foods
         self.fields['wednesday_day_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['wednesday_day_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['wednesday_day_food_2'].queryset = foods
         self.fields['wednesday_day_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['wednesday_day_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['wednesday_day_food_3'].queryset = foods
         self.fields['wednesday_day_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['wednesday_day_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['wednesday_day_food_4'].queryset = foods
         self.fields['wednesday_day_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['wednesday_night_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['wednesday_night_food_1'].queryset = foods
         self.fields['wednesday_night_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['wednesday_night_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['wednesday_night_food_2'].queryset = foods
         self.fields['wednesday_night_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['wednesday_night_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['wednesday_night_food_3'].queryset = foods
         self.fields['wednesday_night_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['wednesday_night_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['wednesday_night_food_4'].queryset = foods
         self.fields['wednesday_night_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
 
-        self.fields['thursday_day_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['thursday_day_food_1'].queryset = foods
         self.fields['thursday_day_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['thursday_day_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['thursday_day_food_2'].queryset = foods
         self.fields['thursday_day_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['thursday_day_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['thursday_day_food_3'].queryset = foods
         self.fields['thursday_day_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['thursday_day_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['thursday_day_food_4'].queryset = foods
         self.fields['thursday_day_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['thursday_night_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['thursday_night_food_1'].queryset = foods
         self.fields['thursday_night_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['thursday_night_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['thursday_night_food_2'].queryset = foods
         self.fields['thursday_night_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['thursday_night_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['thursday_night_food_3'].queryset = foods
         self.fields['thursday_night_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['thursday_night_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['thursday_night_food_4'].queryset = foods
         self.fields['thursday_night_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
 
-        self.fields['friday_day_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['friday_day_food_1'].queryset = foods
         self.fields['friday_day_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['friday_day_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['friday_day_food_2'].queryset = foods
         self.fields['friday_day_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['friday_day_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['friday_day_food_3'].queryset = foods
         self.fields['friday_day_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['friday_day_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['friday_day_food_4'].queryset = foods
         self.fields['friday_day_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['friday_night_food_1'].queryset = FoodDetail.objects.all()
+        self.fields['friday_night_food_1'].queryset = foods
         self.fields['friday_night_food_1'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['friday_night_food_2'].queryset = FoodDetail.objects.all()
+        self.fields['friday_night_food_2'].queryset = foods
         self.fields['friday_night_food_2'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['friday_night_food_3'].queryset = FoodDetail.objects.all()
+        self.fields['friday_night_food_3'].queryset = foods
         self.fields['friday_night_food_3'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
-        self.fields['friday_night_food_4'].queryset = FoodDetail.objects.all()
+        self.fields['friday_night_food_4'].queryset = foods
         self.fields['friday_night_food_4'].label_from_instance = lambda obj: "%s %s " % (obj.name, obj.amount)
 
 

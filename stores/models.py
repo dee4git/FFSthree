@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 locations = [('Farmgate', 'Farmgate'), ('Dhanmondi', 'Dhanmondi'), ('Moghbazar', 'Moghbazar'), ('Badda', 'Badda'),
              ('Uttara', 'Uttara'), ('Azampur', 'Azampur'), ('Khilkhet', 'Khilkhet'), ('Banani', 'Banani'),
              ('Nilkhet', 'Nilkhet'), ('Bashabo', 'Bashabo'), ('Rampura', 'Rampura'), ('Mouchak', 'Mouchak'),
@@ -26,17 +27,6 @@ class FoodDetail(models.Model):
     name = models.CharField(default='Detail Food name', max_length=100)
     amount = models.CharField(default='100 g', max_length=100)
     calorie = models.FloatField(default=0.0)
-
-
-class Food(models.Model):
-    food_1 = models.ForeignKey(FoodDetail, related_name='food_1', blank=False, null=False, on_delete=models.CASCADE,
-                               default=None)
-    food_2 = models.ForeignKey(FoodDetail, related_name='food_2', blank=True, null=True, on_delete=models.CASCADE,
-                               default=None)
-    food_3 = models.ForeignKey(FoodDetail, related_name='food_3', blank=True, null=True, on_delete=models.CASCADE,
-                               default=None)
-    food_4 = models.ForeignKey(FoodDetail, related_name='food_4', blank=True, null=True, on_delete=models.CASCADE,
-                               default=None)
 
 
 plan_category = [('Homemade', 'Homemade'), ('Professional', 'Professional')]

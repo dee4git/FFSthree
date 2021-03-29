@@ -102,6 +102,7 @@ def create_enrolment(request, plan_id):
 
 
 def count_bmi(data):
+    """ counts bmi of a floating input """
     height = data['height']
     weight = data['weight']
     ft = math.floor(height)
@@ -142,7 +143,6 @@ def add_money(request):
                 instance = extended_user
                 data = form.cleaned_data
                 instance.balance += data['balance']
-                # counting total bmi and updating it
                 instance.save()
                 return view_enrolments(request)
         else:
