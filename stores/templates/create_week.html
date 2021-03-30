@@ -6,10 +6,13 @@
 
             <h6>Welcome to Plan Editor </h6>
             <h6>Remember to add at least one food per meal.</h6>
-{#            <a href= {% url 'add_food' store_id %} class="text-decoration-none" >#}
-{#            <div class="row justify-content-center align-self-center">#}
-{#                    Add More Food in your store#}
-{#            </div></a>#}
+            <h6>Need more food?
+                <a href= {% url 'add_food' store_id %} class="text-decoration-none" >
+                Add Food</a></h6>
+            {#            <a href= {% url 'add_food' store_id %} class="text-decoration-none" >#}
+            {#            <div class="row justify-content-center align-self-center">#}
+            {#                    Add More Food in your store#}
+            {#            </div></a>#}
         </div></div>
     <form method="POST">
         {% csrf_token %}

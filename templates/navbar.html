@@ -27,24 +27,31 @@
                 <a class="nav-link" href="{% url 'all_stores' %}">STORES</a>
             </li>
         </ul>
-            <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
 
             {% if user.is_authenticated %}
+                {% if has_store == 1 %}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">DASHBOARD</a>
+                    </li>
+                {% endif %}
+
                 {% if has_enrolment == 1 %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'view_enrolments' %}">SEE ENROLMENT</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'see_profile' %}">SEE PROFILE</a>
-                </li>
+
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'see_profile' %}">SALES REPORT</a>
-                </li>
-                    {% else %}
+                        <a class="nav-link" href="{% url 'view_enrolments' %}">SEE ENROLMENT</a>
+                    </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="{% url 'set_profile' %}">SET PROFILE</a>
-                </li>
-                    {% endif %}
+                        <a class="nav-link" href="{% url 'see_profile' %}">SEE PROFILE</a>
+
+                        {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'set_profile' %}">SET PROFILE</a>
+                    </li>
+
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">LOG OUT </a>
                 </li>

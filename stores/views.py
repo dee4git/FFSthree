@@ -84,6 +84,7 @@ def add_week(request, plan_id):
     confirmation = "Create Week?"
     cancel = "Cancel"
     plan = Plan.objects.get(pk=plan_id)
+    store = plan.store
     # foods = FoodDetail.objects.filter(store=plan.store)
     if request.method == "POST" or "GET":
         form = forms.WeekForm(request.POST, request.FILES, user=request.user)
@@ -100,7 +101,7 @@ def add_week(request, plan_id):
             plan.visibility = True
             plan.save()
             instance.save()
-            return redirect("/")
+            return published_plans(request,plan_id)
     else:
         form = forms.WeekForm(user=request.user)
 
@@ -111,6 +112,7 @@ def add_week(request, plan_id):
                    "confirm": confirm,
                    "confirmation": confirmation,
                    "plan_id": plan_id,
+                   "store_id": store.id,
                    },
                   )
 
@@ -126,7 +128,7 @@ def update_plan(request, plan_id):
             form = forms.PlanForm(request.POST or None, request.FILES, instance=up)
             if form.is_valid():
                 form.save()
-                return redirect('/')
+                return published_plans(request,plan_id)
 
         else:
             form = forms.PlanForm(instance=up)
@@ -151,7 +153,7 @@ def add_plan(request, store_id):
             instance = form.save(commit=False)
             instance.store = Store.objects.get(pk=store_id)
             instance.save()
-            return redirect("/")
+            return manage_plans(request,store_id)
     else:
         form = forms.PlanForm()
     return render(request, 'create.html',
@@ -201,7 +203,7 @@ def create_store(request):
                     instance = form.save(commit=False)
                     instance.owner = request.user
                     instance.save()
-                    return redirect("/")
+                    return view_store(request,store_id = instance.id)
             else:
                 form = forms.Form()
             return render(request, 'create.html',

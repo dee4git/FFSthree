@@ -71,6 +71,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'enrolments.context_processors.extras',
                 'enrolments.context_processors.enrolment',
+                'enrolments.context_processors.store',
             ],
         },
     },

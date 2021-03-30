@@ -1,13 +1,47 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from stores.models import Plan
+from stores.models import Plan, Store, FoodDetail
 from . import forms
 from .models import ExtendedUser, Enrolment
 import math
+import datetime
+from django.db.models import Q
 
 
 # Create your views here.
+def dashboard(request):
+    stores = Store.objects.filter(owner=request.user)
+    extended_user = ExtendedUser.objects.get(user=request.user)
+    foods = FoodDetail.objects.none()
+    plans = Plan.objects.none()
+    enrolments = Enrolment.objects.none()
+    today = datetime.date.today()
+    for i in stores:
+        foods |= FoodDetail.objects.filter(store=i)
+        plans |= Plan.objects.filter(store=i)
+    for i in plans:
+        enrolments |= Enrolment.objects.filter(plan=i)
+    # valid enrolments are those which are inside the start and end date.
+    valid_enrolments = enrolments.filter(Q(start_date__lte=today), (Q(end_date__gte=today) | Q(end_date=None)))
+    lunch = []
+    dinner = []
+    for i in valid_enrolments:
+        dinner.append(i.night_meal_count)
+        lunch.append(i.day_meal_count)
+    lunch=sum(lunch)
+    dinner=sum(dinner)
+    return render(request, 'dashboard.html', {
+        "stores": stores,
+        "plans": plans,
+        "foods": foods,
+        "enrolments": enrolments,
+        "extended_user": extended_user,
+        "lunch": lunch,
+        "dinner": dinner,
+    })
+
+
 def delete_enrolment(request, e_id):
     Enrolment.objects.get(pk=e_id).delete()
     return view_enrolments(request)

@@ -1,0 +1,205 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    {% load static %}
+        <br>
+
+    <div class="jumbotron d-flex align-items-center">
+        <div class="container" align="middle">
+            <h2>Welcome to FFS Dashboard</h2>
+                </div></a>
+        </div>
+    </div>
+    <div class="row">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/colors.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+<div class="grey-bg container-fluid">
+  <section id="minimal-statistics">
+<section id="stats-subtitle">
+  <div class="row" align="middle">
+    <div class="col-12 mt-3 mb-1">
+      <h4 class="text-uppercase">Sales Report at a glance</h4>
+        {% now "jS F Y " %}
+
+    </div>
+  </div>
+<br>
+
+{#    users#}
+      <div class="row">
+    <div class="col-xl-6 col-md-12">
+      <div class="card overflow-hidden">
+        <div class="card-content">
+          <div class="card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="align-self-center">
+                <i class="icon-user primary font-large-2 mr-2"></i>
+              </div>
+              <div class="media-body">
+                <h4>Active Customers</h4>
+                <span>Send Meal</span>
+              </div>
+              <div class="align-self-center">
+                <h1>{{ enrolments.count }}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-md-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="align-self-center">
+                <i class="icon-heart danger font-large-2 mr-2"></i>
+              </div>
+              <div class="media-body">
+                <h4>Total Revenue</h4>
+                <span>Since start</span>
+              </div>
+              <div class="align-self-center">
+                <h1>BDT: &nbsp {{ extended_user.balance }}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-6 col-md-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="align-self-center">
+                <i class="icon-rocket alert font-large-2 mr-2"></i>
+              </div>
+              <div class="media-body">
+                <h4>Lunch order</h4>
+                <span>Prepare before 8.00 AM</span>
+              </div>
+              <div class="align-self-center">
+                <h1>{{ lunch }}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-md-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body cleartfix">
+            <div class="media align-items-stretch">
+              <div class="align-self-center">
+                <i class="icon-rocket alert font-large-2 mr-2"></i>
+              </div>
+              <div class="media-body">
+               <h4>Dinner order</h4>
+                <span>Prepare before 7.00 PM</span>
+              </div>
+              <div class="align-self-center">
+                <h1>{{ dinner }}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="row" align="middle">
+      <div class="col-12 mt-3 mb-1">
+        <h4 class="text-uppercase">All your assets</h4>
+        <p>---</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="icon-pointer danger font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3>{{ stores.count }}</h3>
+                  <span>Stores</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="icon-book-open success font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3>{{ plans.count }}</h3>
+                  <span>Plans</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="icon-cup  font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3>{{ foods.count }}</h3>
+                  <span>Foods</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="icon-user primary font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3>423</h3>
+                  <span>Delivery Fighters</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+
+
+</section>
+</div>
+        </div>
+{% endblock %}

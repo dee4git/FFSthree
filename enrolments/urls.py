@@ -6,6 +6,7 @@ urlpatterns = [
     path('set_profile', views.set_profile, name="set_profile"),
     path('see_profile', views.see_profile, name="see_profile"),
     path('edit_profile', views.edit_profile, name="edit_profile"),
+    path('dashboard', views.dashboard, name="dashboard"),
     path('view_enrolments', views.view_enrolments, name="view_enrolments"),
     path('add_money', views.add_money, name="add_money"),
     path('create_enrolment/<int:plan_id>/', views.create_enrolment, name="create_enrolment"),

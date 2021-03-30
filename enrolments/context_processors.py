@@ -1,3 +1,4 @@
+from stores.models import Store
 from .models import ExtendedUser, Enrolment
 
 
@@ -22,3 +23,14 @@ def enrolment(request):
     except:
         has_enrolment = 0
     return {"has_enrolment": has_enrolment}
+
+
+def store(request):
+    has_store = 0
+    try:
+        stores = Store.objects.filter(owner=request.user)
+        if stores is not None:
+            has_store = 1
+    except:
+        has_store = 0
+    return {"has_store": has_store}
