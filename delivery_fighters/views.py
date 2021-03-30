@@ -15,7 +15,7 @@ def set_del_profile(request):
             return see_profile(request)
     else:
         form = forms.DeliveryFighterForm()
-    return render(request, 'set_profile.html',
+    return render(request, 'set_del_profile.html',
                   {"form": form,
                    }
                   )
