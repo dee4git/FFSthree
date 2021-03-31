@@ -1,0 +1,18 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'add_food.css' %}">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <h2 class="active"> Delivery Profile Setup</h2>
+            <form method="POST" >
+                {% csrf_token %}
+  <tr>
+                        <th scope="col">                {{ form.store_request.label_tag }}</th>
+                        <th scope="col">                {{ form.store_request }}
+                        </th>                <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    {% load static %}
+    <div class="select2-container">
+        <div class="container mt-5 mb-5">
+            <div class="d-flex justify-content-center row">
+                <div class="col-md-10">
+                    <div class="row p-2 bg-white border rounded">
+                        <div class="col-md-2 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ delivery_fighter.user.photo.url}}" ></div>
+                        <div class="col-md-6 mt-1">
+                            <h2>Hello, {{ delivery_fighter.user.name }}!</h2>
+
+                            <div class="d-flex flex-row">
+                                <div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><span></span>
+                            </div>
+                            <div class="mt-1 mb-1 spec-1"><span>Phone: {{ delivery_fighter.user.phone }}</span>
+                                <span class="dot"></span><br>
+                                <span>Location: {{ delivery_fighter.user.location  }}<br>
+                        <span>Address: {{ delivery_fighter.user.address  }}<br>
+                        </span>
+                        </span>
+                            </div>
+                        </div>
+                        <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                            <br>
+                            <div class="d-flex flex-row align-items-center" align="middle">
+                                <h5>Balance: {{ delivery_fighter.user.balance }} BDT</h5></span>
+                            </div>
+                            {#                    <div class="d-flex flex-column mt-4" >#}
+                            <a href= {% url 'add_money' %} class="text-decoration-none" >
+                                <button class="btn btn-outline-primary btn-sm mt-2" type="button">Add Money</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div align="middle">
+                <a href= {% url 'manage_request_fighter' %} class="text-decoration-none" >
+                    <h3> Store Requests </h3></a>
+    </div>
+
+<div align="middle" class="alert alert-success" role="alert">
+Congratulations!!! You are working with {{ store.name }}     </div>
+     <div align="middle" class="alert alert-success" role="alert">
+May you have a good day in your job, fighter!        </div>
+<table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Enrolled User</th>
+            <th scope="col">Location</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Meals(Day/Night)</th>
+            <th scope="col">Collect Code</th>
+            <th scope="col">Meal Confirmation</th>
+            <th scope="col">Special Note</th>
+
+        </tr>
+        </thead>
+        {%  for i in valid_enrolments %}
+            <tbody>
+            <tr>
+                <td>{{ i.user.name }}</td>
+                <td>{{ i.user.location }}</td>
+                <td>{{ i.user.address }}</td>
+                <td>{{ i.user.phone }}</td>
+                <td>{{ i.day_meal_count }} / {{ i.night_meal_count }}</td>
+                <td>Working </td>
+                <td>Working </td>
+                <td>{{ i.special_note }}</td>
+
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

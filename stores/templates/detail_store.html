@@ -2,7 +2,7 @@
 {% extends 'navbar.html' %}
 {% load static %}
 <link rel="stylesheet" type="text/css"
-    href="{% static 'detail_store.css' %}">
+      href="{% static 'detail_store.css' %}">
 
 {% block content %}
 
@@ -52,8 +52,8 @@
                                             <span class="badge bg-primary">Edit Store</span></a>
                                         <a href= {% url 'manage_plans' store.id %} class="text-decoration-none">
                                             <span class="badge bg-success">Manage Plans</span></a>
-{#                                        <a href= {% url 'add_food' store.id %} class="text-decoration-none">#}
-{#                                            <span class="badge bg-info">Add Food </span></a>#}
+                                        {#                                        <a href= {% url 'add_food' store.id %} class="text-decoration-none">#}
+                                        {#                                            <span class="badge bg-info">Add Food </span></a>#}
                                         <a href= {% url 'manage_food' store.id %} class="text-decoration-none">
                                             <span class="badge bg-info">Manage Food </span></a>
                                         <a onclick="return confirm('Are you sure you want to create this store?');"
@@ -85,7 +85,7 @@
 
                                     <a href= {% url 'edit_store_rating' store.id %} class="text-decoration-none" >
                                         <button class="btn btn-success btn-block btn-md">
-                                        Edit your rating </button></a>
+                                            Edit your rating </button></a>
                                 </div>
                             {% endif %}
                             <div class="col-md-4 col-sm-4 text-center">
@@ -112,13 +112,16 @@
     <div class="container-fluid">
         {% block rating %}
 
-<div class="jumbotron d-flex align-items-center">
-        <div class="container">
-            <h2 align="middle">No plans in this store yet!</h2>
-            <a href= {% url 'home' %} class="text-decoration-none" >
-            <div class="row justify-content-center align-self-center">
-                    Go Home
-            </div></a>
-        </div></div>        {% endblock %}
+            <div class="jumbotron d-flex align-items-center">
+                <div class="container">
+                    <h2 align="middle">No plans in this store yet!</h2>
+                    <a href= {% url 'home' %} class="text-decoration-none" >
+                        <div class="row justify-content-center align-self-center">
+                            Go Home
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endblock %}
     </div>
 {% endblock %}

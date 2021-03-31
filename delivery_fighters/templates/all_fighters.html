@@ -1,0 +1,78 @@
+<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<!DOCTYPE html>
+{% extends 'navbar.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css"
+      href="{% static 'comments.css' %}">
+{% block content %}
+    <div class="container">
+        <br/>
+        <h2>Hire a Delivery Fighter! </h2>
+        <hr/>
+        <div class="row">
+            {% for i in fighters %}
+                <div class="col-md-4">
+                    <div class="container mt-5 d-flex justify-content-center">
+                        <div>
+                            <div class="card p-4 mt-3">
+                                <div class="first">
+                                    <div class="time d-flex flex-row align-items-center justify-content-between mt-3">
+                                    </div>
+                                </div>
+                                <div class="second d-flex flex-row mt-3">
+                                    <div class="image mr-4"> <img src="{{ i.user.photo.url }}" class="rounded-circle" width="50" /> </div>
+                                    <div class="">
+                                        <div class="d-flex flex-row mb-1"> <span>Hi,<br> I am {{ i.user.name }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="line-color">
+                                <p>Want to work at <br>
+                                    {{ i.user.location }}</p>
+                                <div class="third mt-4">
+                                     <a href= {% url 'request_fighter' i.id %} class="text-decoration-none" >
+                                            <button class="btn btn-danger btn-block"><i class="fa fa-clock-o"></i> Hire Fighter</button>
+                                        </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+            {% endfor %}
+            {% for i in requested %}
+                <div class="col-md-4">
+                    <div class="container mt-5 d-flex justify-content-center">
+                        <div>
+                            <div class="card p-4 mt-3">
+                                <div class="first">
+                                    <div class="time d-flex flex-row align-items-center justify-content-between mt-3">
+                                    </div>
+                                </div>
+                                <div class="second d-flex flex-row mt-3">
+                                    <div class="image mr-4"> <img src="{{ i.fighter.user.photo.url }}" class="rounded-circle" width="50" /> </div>
+                                    <div class="">
+                                        <div class="d-flex flex-row mb-1"> <span>Hi,<br> I am {{ i.user.name }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="line-color">
+                                <p>Want to work at <br>
+                                    {{ i.fighter.user.location }}</p>
+                                <div class="third mt-4">
+                                     <a href= {% url 'cancel_request_fighter' i.id %} class="text-decoration-none" >
+                                            <button class="btn btn-secondary btn-block"><i class="fa fa-clock-o"></i> Cancel </button>
+                                        </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+            {% endfor %}
+        </div></div>
+    </div>
+    </div>
+    </section>
+{% endblock %}

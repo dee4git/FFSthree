@@ -1,5 +1,6 @@
 from stores.models import Store
 from .models import ExtendedUser, Enrolment
+from delivery_fighters.models import DeliveryFighter
 
 
 def extras(request):
@@ -34,3 +35,17 @@ def store(request):
     except:
         has_store = 0
     return {"has_store": has_store}
+
+
+def delivery(request):
+    is_deli = 0
+    try:
+        enrolled_user = ExtendedUser.objects.get(user=request.user)
+        delivery_fighter = DeliveryFighter.objects.get(user=enrolled_user)
+        if delivery_fighter is not None:
+            is_deli = 1
+        else:
+            is_deli = 0
+    except:
+        is_deli = 0
+    return {"is_deli": is_deli}

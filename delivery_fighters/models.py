@@ -1,5 +1,9 @@
+import uuid
+
 from django.contrib.auth.models import User
 from django.db import models
+from enrolments.models import ExtendedUser, Enrolment
+from stores.models import Store
 
 # Create your models here.
 
@@ -11,11 +15,19 @@ locations = [('Farmgate', 'Farmgate'), ('Dhanmondi', 'Dhanmondi'), ('Moghbazar',
 
 
 class DeliveryFighter(models.Model):
-    user = models.OneToOneField(User, default=None, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, default=None)
-    gender = models.CharField(max_length=100, choices=genders)
-    phone = models.CharField(max_length=11, default='01719600900')
-    preferred_location = models.CharField(choices=locations, max_length=100)
-    photo = models.ImageField(upload_to='pics/delivery_fighters', default='dp.png')
+    user = models.OneToOneField(ExtendedUser, default=None, on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, related_name='store', blank=True, null=True, default=None,
+                              on_delete=models.CASCADE)
     is_available = models.BooleanField(default=True)
-    balance = models.FloatField(default=0.0)
+
+
+class FighterRequest(models.Model):
+    requester = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    fighter = models.ForeignKey(DeliveryFighter, default=None, on_delete=models.CASCADE)
+    store_request = models.ForeignKey(Store, related_name='store_request', default=None, on_delete=models.CASCADE)
+
+
+class MealVerification(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    enrolment = models.ForeignKey(Enrolment,  default=None, on_delete=models.CASCADE)
+

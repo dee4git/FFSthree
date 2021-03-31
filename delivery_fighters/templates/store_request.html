@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% extends 'navbar.html' %}
+{% block content %}
+
+    <div class="container">
+        <br/>
+        <h2>These shop wants to hire you as their delivery fighters.</h2>
+        <hr/>
+        <div class="row">
+            {% for i in store_requests %}
+
+                <div class="col-md-3">
+                    <div class="card mb-3 shadow">
+                        <a href="{% url 'view_store' i.store_request.id %}" class="text-decoration-none">
+                            <h3 class="card-text" > &nbsp{{ i.store_request.name }}</h3></a>
+                        <p>&nbsp   <i class="fa fa-map-marker" style="font-size:20px"></i>
+                            {{ i.store_request.location }}</p>
+                        <img class="card-img-top" src="{{ i.store_request.display_picture.url }}" alt="No image found!"/>
+                        <div class="card-body">
+                            <a href="{% url 'accept_store_request' i.id %}" class="text-decoration-none">
+                                <button type="button" class="btn btn-outline-primary btn-lg btn-block">Accept</button>
+                            </a>
+                            <br>
+                            <a href="{% url 'view_store' i.id %}" class="text-decoration-none">
+                                <button type="button" class="btn btn-outline-dark btn-lg btn-block">Reject</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

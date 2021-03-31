@@ -14,9 +14,10 @@
                         <h3>Create Store</h3></a>
                 </div>
                 <div class="row justify-content-center align-self-center">
-
+                {% if is_deli == 0  %}
                     <a href= {% url 'set_del_profile' %} class="text-decoration-none" >
                         <h3>Join as a Freelance Delivery Fighter</h3></a></div>
+                    {% endif %}
             {% else %}
                 <div class="row justify-content-center align-self-center">
 
