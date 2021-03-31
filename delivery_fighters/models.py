@@ -27,7 +27,8 @@ class FighterRequest(models.Model):
     store_request = models.ForeignKey(Store, related_name='store_request', default=None, on_delete=models.CASCADE)
 
 
-class MealVerification(models.Model):
+class Meal(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    enrolment = models.ForeignKey(Enrolment,  default=None, on_delete=models.CASCADE)
-
+    date = models.DateField(auto_now_add=True)
+    creator = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    enrolment = models.ForeignKey(Enrolment, default=None, on_delete=models.CASCADE)

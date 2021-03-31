@@ -9,5 +9,7 @@ urlpatterns = [
     path('cancel_request_fighter/<int:requested_id>/', views.cancel_request_fighter, name="cancel_request_fighter"),
     path('manage_request_fighter/', views.manage_store_request, name="manage_request_fighter"),
     path('accept_store_request/<int:requested_id>/', views.accept_store_request, name="accept_store_request"),
+    path('list_of_customers/', views.list_of_customers, name="list_of_customers"),
+    path('send_meal/', views.send_meal, name="send_meal"),
 
 ]

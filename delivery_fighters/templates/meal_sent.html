@@ -1,0 +1,43 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    {% load static %}
+
+
+
+
+    <div align="middle" class="alert alert-success" role="alert">
+        list of Sent meals </div>
+    <div align="middle" class="alert alert-success" role="alert">
+        <table class="table table-borderless">
+            <thead>
+            <tr>
+                <th scope="col">Enrolled User</th>
+                <th scope="col">Location</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Meals(Day/Night)</th>
+                <th scope="col">Code</th>
+                <th scope="col">Meal Confirmation</th>
+                <th scope="col">Special Note</th>
+
+            </tr>
+            </thead>
+            {%  for i in valid_enrolments %}
+                <tbody>
+                <tr>
+                    <td>{{ i.user.name }}</td>
+                    <td>{{ i.user.location }}</td>
+                    <td>{{ i.user.address }}</td>
+                    <td>{{ i.user.phone }}</td>
+                    <td>{{ i.day_meal_count }} / {{ i.night_meal_count }}</td>
+                    <td>Working </td>
+                    <td>Working </td>
+                    <td>{{ i.special_note }}</td>
+
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+
+
+{% endblock %}
