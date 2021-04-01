@@ -38,20 +38,23 @@
                         <a class="nav-link" href="{% url 'see_del_profile' %}">DELIVERY TASKS</a>
                     </li>
                 {% endif %}
-                {% if has_store == 1 %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dashboard' %}">DASHBOARD</a>
-                    </li>
-                {% endif %}
+                {% if extended_user == 1 %}
 
-                {% if has_enrolment == 1 %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'view_enrolments' %}">SEE ENROLMENT</a>
-                    </li>
-                    <li class="nav-item">
+                    {% if has_store == 1 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'dashboard' %}">DASHBOARD</a>
+                        </li>
+                    {% endif %}
+
+                    {% if has_enrolment == 1 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'view_enrolments' %}">SEE ENROLMENT</a>
+                        </li>
+                        <li class="nav-item">
                         <a class="nav-link" href="{% url 'see_profile' %}">SEE PROFILE</a>
+                    {% endif %}
 
-                        {% else %}
+                {% else %}
 
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'set_profile' %}">SET PROFILE</a>

@@ -1,6 +1,16 @@
 html {
   height: 100%;
 }
+.agent-image{
+
+    background-image:url("https://i.gyazo.com/da27f072059db48590e3b9da9d7789c2.jpg");
+    background-position:center;
+    background-size:cover;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+
+}
 
 body {
   overflow: hidden;

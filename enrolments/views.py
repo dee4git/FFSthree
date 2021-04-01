@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from delivery_fighters.models import Meal
 from stores.models import Plan, Store, FoodDetail
 from . import forms
 from .models import ExtendedUser, Enrolment
@@ -23,14 +24,18 @@ def dashboard(request):
     for i in plans:
         enrolments |= Enrolment.objects.filter(plan=i)
     # valid enrolments are those which are inside the start and end date.
-    valid_enrolments = enrolments.filter(Q(start_date__lte=today), (Q(end_date__gte=today) | Q(end_date=None)))
+    valid_enrolments = enrolments.filter(Q(start_date__lte=today),
+                                         Q(user__balance__gte=200),
+                                         (Q(end_date__gte=today) | Q(end_date=None)),
+                                         (Q(day_meal_count__gt=0)) | (Q(night_meal_count__gt=0))
+                                         )
     lunch = []
     dinner = []
     for i in valid_enrolments:
         dinner.append(i.night_meal_count)
         lunch.append(i.day_meal_count)
-    lunch=sum(lunch)
-    dinner=sum(dinner)
+    lunch = sum(lunch)
+    dinner = sum(dinner)
     return render(request, 'dashboard.html', {
         "stores": stores,
         "plans": plans,
@@ -50,10 +55,18 @@ def delete_enrolment(request, e_id):
 def view_enrolments(request):
     extended_user = ExtendedUser.objects.get(user=request.user)
     enrolments = Enrolment.objects.filter(user=extended_user)
+    meals = Meal.objects.none()
+    for i in enrolments:
+        meals |= Meal.objects.filter(enrolment=i)
+    codes = []
+    for i in meals:
+        codes.append(i.code)
+    print(codes)
     return render(request, 'view_enrolments.html',
                   {
                       "extended_user": extended_user,
                       "enrolments": enrolments,
+                      "codes": codes,
                   }
                   )
 
@@ -65,7 +78,7 @@ def confirm_meal(request, e_id):
     price = enrolment.plan.price
     extended_user = ExtendedUser.objects.get(user=request.user)
     extended_user.balance -= price * total_meal
-    if extended_user.balance > 0:
+    if extended_user.balance >= 0:
         extended_user.save()
         owner = enrolment.plan.store.owner
         owner = ExtendedUser.objects.get(user=owner)

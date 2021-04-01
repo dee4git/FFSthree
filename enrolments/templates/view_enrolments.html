@@ -35,43 +35,68 @@
             </div>
         </div>
     </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Enrolled Plan</th>
-            <th scope="col">Start Date</th>
-            <th scope="col">End Date</th>
-            <th scope="col">Edit Date</th>
-            <th scope="col">Day/Night Meal</th>
-            <th scope="col">Meal Confirmation</th>
-            <th scope="col">Enroll Out</th>
+    <div class="row">
+        <div class="table-responsive col-md-11">
+            <table>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Enrolled Plan</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Edit Date</th>
+                        <th scope="col">Day/Night Meal</th>
+                        <th scope="col">Meal Confirmation</th>
+                        <th scope="col">Enroll Out</th>
 
+                    </tr>
+                    </thead>
+                    {%  for i in enrolments %}
+                        <tbody>
+                        <tr>
+                            <td>{{ i.plan.name }}</td>
+                            <td>{{ i.start_date }}</td>
+                            <td>{{ i.end_date }}</td>
+                            <td><a href= {% url 'update_enrolment' i.id %} class="text-decoration-none" >
+                                Click</a></td>
+                            <td>{{ i.day_meal_count }} / {{ i.night_meal_count }} &nbsp;
+                                <a href= {% url 'update_meal_count' i.id %} class="text-decoration-none" >
+                                    Change</a></td>
+                            </td>
+                            <td><a href= {% url 'confirm_meal' i.id %} class="text-decoration-none" >
+                                click</a>
+                            </td>
 
+                            <td><a href= {% url 'delete_enrolment' i.id %} class="text-decoration-none" >
+                                click</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
 
+                    </thead>
+                </table>
+            </table>
+        </div>
+        <div class="table-responsive col-md-1">
+            <table>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Code</th>
+                    </tr>
+                    </thead>
+                    {%  for i in codes %}
+                        <tbody>
+                        <tr>
+                            <td>{{ i }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
 
-        </tr>
-        </thead>
-        {%  for i in enrolments %}
-            <tbody>
-            <tr>
-                <td>{{ i.plan.name }}</td>
-                <td>{{ i.start_date }}</td>
-                <td>{{ i.end_date }}</td>
-                <td><a href= {% url 'update_enrolment' i.id %} class="text-decoration-none" >
-                    Click</a></td>
-                <td>{{ i.day_meal_count }} / {{ i.night_meal_count }} &nbsp;
-                    <a href= {% url 'update_meal_count' i.id %} class="text-decoration-none" >
-                        Change</a></td>
-                </td>
-                <td><a href= {% url 'confirm_meal' i.id %} class="text-decoration-none" >
-                    click</a>
-                </td>
-
-                <td><a href= {% url 'delete_enrolment' i.id %} class="text-decoration-none" >
-                    click</a></td>
-            </tr>
-            </tbody>
-        {% endfor %}
-    </table>
+                    </thead>
+                </table>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}

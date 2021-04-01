@@ -5,15 +5,15 @@
           href="{% static 'add_food.css' %}">
     <div class="wrapper fadeInDown">
         <div id="formContent">
-            <h2 class="active"> Delivery Profile Setup</h2>
+            <h2 class="active"> Proof of delivery </h2>
             <br>
             <br>
             <br>
             <form method="POST" >
                 {% csrf_token %}
   <tr>
-                        <th scope="col">                Select Store: </th>
-                        <th scope="col">                {{ form.store_request }}
+                        <th scope="col">                Enter code: </th>
+                        <th scope="col">                {{ form.code }}
                             <br>
                             <br>
                             <br>

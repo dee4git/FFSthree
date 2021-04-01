@@ -36,21 +36,22 @@
         </div>
     </div>
     <div align="middle">
-                <a href= {% url 'manage_request_fighter' %} class="text-decoration-none" >
-                    <h3> Store Requests </h3></a>
+        <a href= {% url 'manage_request_fighter' %} class="text-decoration-none" >
+            <h3> Store Requests </h3></a>
     </div>
 
-<div align="middle" class="alert alert-success" role="alert">
-Congratulations!!! You are working with {{ store.name }}     </div>
-     <div align="middle" class="alert alert-success" role="alert">
-May you have a good day in your job, fighter!        </div>
-<table class="table">
+    <div align="middle" class="alert alert-success" role="alert">
+        Congratulations!!! You are working with {{ store.name }}     </div>
+    <div align="middle" class="alert alert-success" role="alert">
+        May you have a good day in your job, fighter!        </div>
+    <table class="table">
         <thead>
         <tr>
             <th scope="col">Enrolled User</th>
             <th scope="col">Location</th>
             <th scope="col">Address</th>
             <th scope="col">Phone</th>
+            <th scope="col">Balance</th>
             <th scope="col">Meals(Day/Night)</th>
             <th scope="col">Collect Code</th>
             <th scope="col">Meal Confirmation</th>
@@ -58,17 +59,21 @@ May you have a good day in your job, fighter!        </div>
 
         </tr>
         </thead>
-        {%  for i in valid_enrolments %}
+        {%  for i in meals %}
             <tbody>
             <tr>
-                <td>{{ i.user.name }}</td>
-                <td>{{ i.user.location }}</td>
-                <td>{{ i.user.address }}</td>
-                <td>{{ i.user.phone }}</td>
-                <td>{{ i.day_meal_count }} / {{ i.night_meal_count }}</td>
-                <td>Working </td>
-                <td>Working </td>
-                <td>{{ i.special_note }}</td>
+                <td>{{ i.enrolment.user.name }}</td>
+                <td>{{ i.enrolment.user.location }}</td>
+                <td>{{ i.enrolment.user.address }}</td>
+                <td>{{ i.enrolment.user.phone }}</td>
+                <td>{{ i.enrolment.user.balance }}</td>
+                <td>{{ i.enrolment.day_meal_count }} / {{ i.enrolment.night_meal_count }}</td>
+                <td><a href= {% url 'collect_code' i.id %} class="text-decoration-none" >
+                    click</a>
+                </td>
+
+                <td>{{ i.is_received }} </td>
+                <td>{{ i.enrolment.special_note }}</td>
 
             </tr>
             </tbody>

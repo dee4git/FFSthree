@@ -1,3 +1,6 @@
+import random
+
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
 import datetime
@@ -10,13 +13,30 @@ from enrolments.models import ExtendedUser
 
 
 # Create your views here.
+def collect_code(request, meal_id):
+    meal = Meal.objects.get(pk=meal_id)
+    if request.method == "POST":
+        form = forms.CodeCollectionForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            if instance.code == meal.code:
+                meal.is_received = True
+                meal.save()
+            return see_del_profile(request)
+    else:
+
+        form = forms.CodeCollectionForm()
+    return render(request, 'code_collection.html',
+                  {"form": form,
+                   }
+                  )
+
+
 def sent_meal(request):
     today = datetime.date.today()
-    # delivery_fighter = DeliveryFighter.objects.get(user=ExtendedUser.objects.get(user=request.user))
-    # store_owner = delivery_fighter.store.owner
     today_meal = Meal.objects.filter(date=today, creator=request.user)
-    return render(request,'list_of_customers.html',{
-        "today_meal":today_meal,
+    return render(request, 'list_of_sent_meal_customers.html', {
+        "today_meal": today_meal,
     })
 
 
@@ -33,12 +53,14 @@ def send_meal(request):
         # valid enrolments are those in which today is inside the start and end date and has at least 1 meal today.
         try:
             valid_enrolments = enrolments.filter(Q(start_date__lte=today),
+                                                 Q(user__balance__gte=200),
                                                  (Q(end_date__gte=today) | Q(end_date=None)),
                                                  (Q(day_meal_count__gt=0)) | (Q(night_meal_count__gt=0))
                                                  )
             for i in valid_enrolments:
                 print(i)
-                Meal(creator=request.user, enrolment=i).save()
+                Meal(creator=request.user, enrolment=i, code=random.randint(1000, 9999)).save()
+
                 # meal.save()
             return sent_meal(request)
         except:
@@ -48,6 +70,11 @@ def send_meal(request):
 
 
 def list_of_customers(request):
+    """deals with list of valid customers
+    customers who are -
+    1. enrolled
+    2. wants a meal today
+    3. has more than 200 taka in his account"""
     today = datetime.date.today()
     try:
         stores = Store.objects.filter(owner=request.user)
@@ -60,9 +87,11 @@ def list_of_customers(request):
         # valid enrolments are those in which today is inside the start and end date and has at least 1 meal today.
         try:
             valid_enrolments = enrolments.filter(Q(start_date__lte=today),
+                                                 Q(user__balance__gte=200),
                                                  (Q(end_date__gte=today) | Q(end_date=None)),
                                                  (Q(day_meal_count__gt=0)) | (Q(night_meal_count__gt=0))
                                                  )
+            print(valid_enrolments)
             return render(request, 'list_of_customers.html',
                           {
                               "valid_enrolments": valid_enrolments,
@@ -116,6 +145,7 @@ def manage_store_request(request):
     })
 
 
+@login_required
 def request_fighter(request, fighter_id):
     fighter = DeliveryFighter.objects.get(pk=fighter_id)
     if request.method == "POST":
@@ -185,14 +215,19 @@ def see_del_profile(request):
         # valid enrolments are those in which today is inside the start and end date and has at least 1 meal today.
         try:
             valid_enrolments = enrolments.filter(Q(start_date__lte=today),
+                                                 Q(user__balance__gte=200),
                                                  (Q(end_date__gte=today) | Q(end_date=None)),
                                                  (Q(day_meal_count__gt=0)) | (Q(night_meal_count__gt=0))
                                                  )
+            meals = Meal.objects.none()
+            for i in valid_enrolments:
+                meals |= Meal.objects.filter(enrolment=i)
+
             return render(request, 'see_del_profile.html',
                           {
                               "delivery_fighter": delivery_fighter,
                               "store": store,
-                              "valid_enrolments": valid_enrolments,
+                              "meals": meals,
                           }
                           )
         except:

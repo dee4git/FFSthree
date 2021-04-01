@@ -1,4 +1,5 @@
 import uuid
+import random
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -28,7 +29,8 @@ class FighterRequest(models.Model):
 
 
 class Meal(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    code = models.CharField(max_length=4, null=True, blank=True)
     date = models.DateField(auto_now_add=True)
     creator = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     enrolment = models.ForeignKey(Enrolment, default=None, on_delete=models.CASCADE)
+    is_received = models.BooleanField(default=False)

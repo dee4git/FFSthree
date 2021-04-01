@@ -11,5 +11,7 @@ urlpatterns = [
     path('accept_store_request/<int:requested_id>/', views.accept_store_request, name="accept_store_request"),
     path('list_of_customers/', views.list_of_customers, name="list_of_customers"),
     path('send_meal/', views.send_meal, name="send_meal"),
+    path('sent_meal/', views.sent_meal, name="sent_meal"),
+    path('collect_code/<int:meal_id>/', views.collect_code, name="collect_code"),
 
 ]

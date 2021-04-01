@@ -5,6 +5,9 @@
     <a href= {% url 'send_meal' %} class="text-decoration-none" >
         <div align="middle" class="alert alert-info" role="alert">
             Click to send meal to everyone  </div></a>
+    <a href= {% url 'sent_meal' %} class="text-decoration-none" >
+        <div align="middle" class="alert alert-info" role="alert">
+            Click to view sent meals </div></a>
     <div align="middle" class="alert alert-success" role="alert">
         Here is the list of your today's customers  </div>
     <div align="middle" class="alert alert-success" role="alert">
@@ -16,22 +19,19 @@
                 <th scope="col">Address</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Meals(Day/Night)</th>
-                <th scope="col">Collect Code</th>
-                <th scope="col">Meal Confirmation</th>
+
                 <th scope="col">Special Note</th>
             </tr>
             </thead>
-            {%  for i in today_meal %}
+            {%  for i in valid_enrolments %}
                 <tbody>
                 <tr>
-                    <td>{{ i.enrolment.user.name }}</td>
-                    <td>{{ i.enrolment.user.location }}</td>
-                    <td>{{ i.enrolment.user.address }}</td>
-                    <td>{{ i.enrolment.user.phone }}</td>
-                    <td>{{ i.enrolment.day_meal_count }} / {{ i.enrolment.night_meal_count }}</td>
-                    <td>{{ i.id }} </td>
-                    <td>Working </td>
-                    <td>{{ i.enrolment.special_note }}</td>
+                    <td>{{ i.user.name }}</td>
+                    <td>{{ i.user.location }}</td>
+                    <td>{{ i.user.address }}</td>
+                    <td>{{ i.user.phone }}</td>
+                    <td>{{ i.day_meal_count }} / {{ i.night_meal_count }}</td>
+                    <td>{{ i.special_note }}</td>
                 </tr>
                 </tbody>
             {% endfor %}

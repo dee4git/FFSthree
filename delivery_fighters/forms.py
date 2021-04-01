@@ -1,7 +1,15 @@
 from django import forms
 
 from stores.models import Store
-from .models import DeliveryFighter, FighterRequest
+from .models import DeliveryFighter, FighterRequest, Meal
+
+
+class CodeCollectionForm(forms.ModelForm):
+    class Meta:
+        model = Meal
+        fields = [
+            'code'
+        ]
 
 
 class DeliveryFighterForm(forms.ModelForm):
