@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% extends 'navbar.html' %}
+{% block content %}
+
+    <div class="container">
+        <br/>
+        <h2>You have accepted the following store request(s)</h2>
+        <hr/>
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="card mb-3 shadow">
+                    <a href="{% url 'view_store' store.id %}" class="text-decoration-none">
+                        <h3 class="card-text" > &nbsp{{ store.name }}</h3></a>
+                    <p>&nbsp   <i class="fa fa-map-marker" style="font-size:20px"></i>
+                        {{ store.location }}</p>
+                    <img class="card-img-top" src="{{ store.display_picture.url }}" alt="No image found!"/>
+                    <div class="card-body">
+                        <button type="button" class="btn btn-success btn-lg btn-block">Accepted</button>
+                        <br>
+                        <a href="{% url 'decline_store_request' requested_id %}" class="text-decoration-none">
+                            <button type="button" class="btn btn-outline-dark btn-lg btn-block">Decline</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+    </div>
+{% endblock %}
