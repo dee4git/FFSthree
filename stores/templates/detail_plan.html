@@ -26,8 +26,10 @@
                     </div>
                     <h6 class="text-success">Free shipping</h6>
                     <div class="d-flex flex-column mt-4">
+                        {% if plan.capacity > 0 %}
                         <a href= {% url 'create_enrolment' plan.id %} class="text-decoration-none" >
                         <button class="btn btn-outline-primary btn-sm mt-2" type="button">Enroll</button></a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

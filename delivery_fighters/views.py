@@ -10,9 +10,25 @@ from .models import DeliveryFighter, FighterRequest, Meal
 from enrolments.models import ExtendedUser, Enrolment
 from enrolments.views import set_profile
 from enrolments.models import ExtendedUser
+from enrolments.views import confirm_meal
 
 
 # Create your views here.
+def make_payment(e_id):
+    """Automatic payment when the code is correct"""
+    enrolment = Enrolment.objects.get(pk=e_id)
+    total_meal = enrolment.day_meal_count + enrolment.night_meal_count
+    price = enrolment.plan.price
+    extended_user = enrolment.user
+    extended_user.balance -= price * total_meal
+    if extended_user.balance >= 0:
+        extended_user.save()
+        owner = enrolment.plan.store.owner
+        owner = ExtendedUser.objects.get(user=owner)
+        owner.balance += price * total_meal
+        owner.save()
+
+
 def collect_code(request, meal_id):
     meal = Meal.objects.get(pk=meal_id)
     if request.method == "POST":
@@ -21,6 +37,7 @@ def collect_code(request, meal_id):
             instance = form.save(commit=False)
             if instance.code == meal.code:
                 meal.is_received = True
+                make_payment(e_id=meal.enrolment.id)
                 meal.save()
             return see_del_profile(request)
     else:
@@ -134,7 +151,21 @@ def accept_store_request(request, requested_id):
     store = instance.store_request
     fighter.store = store
     fighter.save()
-    return see_del_profile(request)
+    return render(request, 'accepted_store_request.html', {
+        "store": store,
+        "requested_id": requested_id
+    })
+
+
+def decline_store_request(request, requested_id):
+    fighter_request = FighterRequest.objects.get(pk=requested_id)
+    fighter = fighter_request.fighter
+    # making fighter free from the store if he is currently working in that store
+    if fighter_request.store_request == fighter.store:
+        fighter.store = None
+        fighter.save()
+    fighter_request.delete()
+    return manage_store_request(request)
 
 
 def manage_store_request(request):

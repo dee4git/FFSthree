@@ -17,7 +17,7 @@ class Store(models.Model):
     display_picture = models.ImageField(upload_to='pics/stores', default='store.gif')
 
 
-food_type = [('Fish', 'Fish'), ('Rice', 'Rice'), ('Dal', 'Dal'), ('Meet', 'Meet'),
+food_type = [('Fish', 'Fish'), ('Rice', 'Rice'), ('Dal', 'Dal'), ('Meat', 'Meat'),
              ('Vegetable', 'Vegetable'), ('Desert', 'Desert'), ('Special', 'Special')]
 
 

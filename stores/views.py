@@ -64,7 +64,6 @@ def add_food(request, store_id):
 
 def count_calorie(data):
     """This functtion counts the total calore while creating week for a plan"""
-    print('here')
     foods=[]
     calories = []
     for i,j in data.items():
@@ -75,7 +74,6 @@ def count_calorie(data):
         else:
             calories.append(i.calorie)
 
-    # print('Final calories', sum(calories))
     return round(sum(calories),2)
 
 def add_week(request, plan_id):
@@ -197,6 +195,7 @@ def create_store(request):
     try:
         extended_user = ExtendedUser.objects.get(user=request.user)
         if extended_user is not None:
+            # then create store
             if request.method == "POST":
                 form = forms.Form(request.POST, request.FILES)
                 if form.is_valid():

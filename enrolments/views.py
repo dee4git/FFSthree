@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from delivery_fighters.models import Meal
+from delivery_fighters.models import Meal, DeliveryFighter
 from stores.models import Plan, Store, FoodDetail
 from . import forms
 from .models import ExtendedUser, Enrolment
@@ -18,8 +18,10 @@ def dashboard(request):
     plans = Plan.objects.none()
     enrolments = Enrolment.objects.none()
     today = datetime.date.today()
+    delivery_fighters = DeliveryFighter.objects.none()
     for i in stores:
         foods |= FoodDetail.objects.filter(store=i)
+        delivery_fighters |= DeliveryFighter.objects.filter(store=i)
         plans |= Plan.objects.filter(store=i)
     for i in plans:
         enrolments |= Enrolment.objects.filter(plan=i)
@@ -40,6 +42,7 @@ def dashboard(request):
         "stores": stores,
         "plans": plans,
         "foods": foods,
+        "delivery_fighters": delivery_fighters,
         "enrolments": enrolments,
         "extended_user": extended_user,
         "lunch": lunch,
@@ -48,7 +51,11 @@ def dashboard(request):
 
 
 def delete_enrolment(request, e_id):
-    Enrolment.objects.get(pk=e_id).delete()
+    enrolment = Enrolment.objects.get(pk=e_id)
+    plan = enrolment.plan
+    plan.capacity += 1
+    plan.save()
+    enrolment.delete()
     return view_enrolments(request)
 
 
@@ -134,8 +141,10 @@ def create_enrolment(request, plan_id):
                     print('form is valid')
                     instance = form.save(commit=False)
                     instance.user = extended_user
+                    plan.capacity -= 1
                     instance.plan = plan
                     instance.save()
+                    plan.save()
                     return view_enrolments(request)
             else:
                 form = forms.EnrolmentForm()
