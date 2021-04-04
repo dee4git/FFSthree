@@ -34,3 +34,4 @@ class Meal(models.Model):
     creator = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     enrolment = models.ForeignKey(Enrolment, default=None, on_delete=models.CASCADE)
     is_received = models.BooleanField(default=False)
+    is_rated = models.BooleanField(default=False)

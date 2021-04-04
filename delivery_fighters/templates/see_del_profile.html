@@ -51,7 +51,7 @@
             <th scope="col">Location</th>
             <th scope="col">Address</th>
             <th scope="col">Phone</th>
-            <th scope="col">Balance</th>
+            <th scope="col">Date</th>
             <th scope="col">Meals(Day/Night)</th>
             <th scope="col">Collect Code</th>
             <th scope="col">Meal Confirmation</th>
@@ -66,7 +66,7 @@
                 <td>{{ i.enrolment.user.location }}</td>
                 <td>{{ i.enrolment.user.address }}</td>
                 <td>{{ i.enrolment.user.phone }}</td>
-                <td>{{ i.enrolment.user.balance }}</td>
+                <td>{{ i.date }}</td>
                 <td>{{ i.enrolment.day_meal_count }} / {{ i.enrolment.night_meal_count }}</td>
                 <td><a href= {% url 'collect_code' i.id %} class="text-decoration-none" >
                     click</a>

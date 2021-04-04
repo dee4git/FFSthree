@@ -1,0 +1,63 @@
+<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<!DOCTYPE html>
+{% extends 'navbar.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css"
+      href="{% static 'comments.css' %}">
+{% block content %}
+    <div class="container mt-5 mb-5">
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-10">
+                <div class="row p-2 bg-white border rounded">
+                    <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ plan.photo_1.url}}" ></div>
+                    <div class="col-md-6 mt-1">
+                        <a href= {% url 'view_plan' plan.id %} class="text-decoration-none" >
+                            <h5>{{ plan.name }}</h5></a>
+                        <div class="d-flex flex-row">
+                            <div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><span></span>
+                        </div>
+                        <div class="mt-1 mb-1 spec-1"><span>Seat Remaining: {{ plan.capacity }}</span>
+                            <span class="dot"></span><br>
+                            <span>Calorie: {{ plan.total_estimated_calorie  }}<br></span>
+                            <span>Reviews<br></span>
+                        </div>
+                    </div>
+                    <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                        <div class="d-flex flex-row align-items-center">
+                            <h4 class="mr-1">BDT {{ plan.price }}</h4></span>
+                        </div>
+                        <h6 class="text-success">Free shipping</h6>
+                        <div class="d-flex flex-column mt-4">
+                            {% if plan.capacity > 0 %}
+                                <a href= {% url 'create_enrolment' plan.id %} class="text-decoration-none" >
+                                    <button class="btn btn-outline-primary btn-sm mt-2" type="button">Enroll</button></a>
+                            {% else %}
+                                <button class="btn btn-dark" type="button">Not Available</button></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Body -->
+    <section>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 col-md-6 col-12 pb-4">
+                    <h1>Comments</h1>
+                    {% for i in meal_ratings %}
+                        <h4>{{ i.enroller.name }} (Rated: {{ i.rating }}⭐)</h4>
+                        <p>{{ i.comment }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

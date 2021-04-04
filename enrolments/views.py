@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from delivery_fighters.models import Meal, DeliveryFighter
+from rates.models import MealRating
 from stores.models import Plan, Store, FoodDetail
 from . import forms
 from .models import ExtendedUser, Enrolment
@@ -60,20 +61,25 @@ def delete_enrolment(request, e_id):
 
 
 def view_enrolments(request):
+    today = datetime.date.today()
     extended_user = ExtendedUser.objects.get(user=request.user)
     enrolments = Enrolment.objects.filter(user=extended_user)
-    meals = Meal.objects.none()
+    all_meals = Meal.objects.none()
     for i in enrolments:
-        meals |= Meal.objects.filter(enrolment=i)
-    codes = []
-    for i in meals:
-        codes.append(i.code)
-    print(codes)
+        all_meals |= Meal.objects.filter(enrolment=i, date=today)
+    meals = []
+    for i in all_meals:
+        for j in enrolments:
+            if i.enrolment == j:
+                meals.append(i)
+            else:
+                pass
+
     return render(request, 'view_enrolments.html',
                   {
                       "extended_user": extended_user,
                       "enrolments": enrolments,
-                      "codes": codes,
+                      "meals": meals,
                   }
                   )
 

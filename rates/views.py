@@ -1,11 +1,46 @@
 from django.shortcuts import render, redirect
+from delivery_fighters.models import Meal
+from enrolments.models import ExtendedUser
 from . import forms
-# Create your views here.
-from stores.models import Store
-from stores.views import view_store
+from stores.models import Store, Plan
+from stores.views import view_store, view_plan
 from django.contrib.auth.decorators import login_required
+import  datetime
+from .models import StoreRating, MealRating
 
-from .models import StoreRating
+
+def view_plan_rating(request, plan_id):
+    plan = Plan.objects.get(pk=plan_id)
+    meal_ratings = MealRating.objects.filter(meal__enrolment__plan=plan)
+    print(meal_ratings)
+    return render(request, 'plan_rating.html', {
+        "meal_ratings": meal_ratings,
+        "plan": plan,
+    })
+
+
+def rate_meal(request, meal_id):
+    meal = Meal.objects.get(pk=meal_id)
+    enroller = ExtendedUser.objects.get(user=request.user)
+
+    if request.method == "POST":
+        form = forms.MealRatingForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.meal = meal
+            instance.enroller = enroller
+            meal.is_rated = True
+            meal.save()
+            instance.save()
+            return view_plan(request, plan_id=meal.enrolment.plan.id)
+    else:
+        form = forms.MealRatingForm()
+
+    return render(request, 'rate_meal.html', {
+        "form": form,
+        "meal": meal,
+        # "already_rated": already_rated_meal,
+                                              })
 
 
 def edit_store_rating(request, store_id):

@@ -1,0 +1,28 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'add_food.css' %}">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <h2 class="active">Rate {{ meal.name }}</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table class="table table-borderless">
+                    <thead>
+                    <tr>
+                        <th scope="col">                {{ form.rating.label_tag }}</th>
+                        <th scope="col">                {{ form.rating }}
+                        </th>
+                    <tr>
+                        <th scope="col">                {{ form.comment.label_tag }}</th>
+                        <th scope="col">                {{ form.comment }}
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+                <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -13,6 +13,7 @@
                 <th scope="col">Address</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Meals(Day/Night)</th>
+                <th scope="col">Date</th>
                 <th scope="col">Code</th>
                 <th scope="col">Meal Status</th>
                 <th scope="col">Received Confirmation</th>
@@ -26,6 +27,7 @@
                     <td>{{ i.enrolment.user.address }}</td>
                     <td>{{ i.enrolment.user.phone }}</td>
                     <td>{{ i.enrolment.day_meal_count }} / {{ i.enrolment.night_meal_count }}</td>
+                    <td>{{ i.date }} </td>
                     <td>{{ i.code }} </td>
                     <td> Sent </td>
                     <td>{{ i.is_received }}</td>
