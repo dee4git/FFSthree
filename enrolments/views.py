@@ -60,26 +60,29 @@ def delete_enrolment(request, e_id):
     return view_enrolments(request)
 
 
-def view_enrolments(request):
-    today = datetime.date.today()
+def view_meals(request):
     extended_user = ExtendedUser.objects.get(user=request.user)
     enrolments = Enrolment.objects.filter(user=extended_user)
-    all_meals = Meal.objects.none()
+    meals = Meal.objects.none()
     for i in enrolments:
-        all_meals |= Meal.objects.filter(enrolment=i, date=today)
-    meals = []
-    for i in all_meals:
-        for j in enrolments:
-            if i.enrolment == j:
-                meals.append(i)
-            else:
-                pass
+        meals |= Meal.objects.filter(enrolment=i)
+    meals = reversed(meals)  # reversed to print the latest meal first.
+    return render(request, 'view_meals.html',
+                  {
+                      "extended_user": extended_user,
+                      "meals": meals,
+                  }
+                  )
+
+
+def view_enrolments(request):
+    extended_user = ExtendedUser.objects.get(user=request.user)
+    enrolments = Enrolment.objects.filter(user=extended_user)
 
     return render(request, 'view_enrolments.html',
                   {
                       "extended_user": extended_user,
                       "enrolments": enrolments,
-                      "meals": meals,
                   }
                   )
 

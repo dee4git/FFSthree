@@ -39,15 +39,14 @@
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href={% url 'view_enrolments' %} >Enrolment</a>
+                    <a class="nav-link" href={% url 'view_enrolments' %} >Enrolment</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href={% url 'view_meals' %}>Meals</a>
+                    <a class="nav-link Active" href={% url 'view_meals' %} >Meals</a>
                 </li>
-
             </ul>
         </div>
-        <div class="card-body">
+         <div class="card-body">
             <div class="row">
                 <div class="table table-borderless col-md-14">
                     <table>
@@ -60,29 +59,34 @@
                                 <th scope="col">Edit Date</th>
                                 <th scope="col">Day/Night Meal</th>
                                 <th scope="col">Make Payment</th>
-                                <th scope="col">Enroll Out</th>
+                                <th scope="col">Code </th>
+                                <th scope="col">Rate </th>
 
                             </tr>
                             </thead>
-                            {%  for i in enrolments %}
+                            {%  for i in meals %}
                                 <tbody>
-                                <tr>
-                                    <td>{{ i.plan.name }}</td>
-                                    <td>{{ i.start_date }}</td>
-                                    <td>{{ i.end_date }}</td>
-                                    <td><a href= {% url 'update_enrolment' i.id %} class="text-decoration-none" >
-                                        Click</a></td>
-                                    <td>{{ i.day_meal_count }} / {{ i.night_meal_count }} &nbsp;
-                                        <a href= {% url 'update_meal_count' i.id %} class="text-decoration-none" >
-                                            Change</a></td>
-                                    </td>
-                                    <td><a href= {% url 'confirm_meal' i.id %} class="text-decoration-none" >
-                                        click</a>
-                                    </td>
+                                <td>{{ i.enrolment.plan.name }}</td>
+                                <td>{{ i.enrolment.start_date }}</td>
+                                <td>{{ i.enrolment.end_date }}</td>
+                                <td><a href= {% url 'update_enrolment' i.enrolment.id %} class="text-decoration-none" >
+                                    Click</a></td>
+                                <td>{{ i.enrolment.day_meal_count }} / {{ i.enrolment.night_meal_count }} &nbsp;
+                                    <a href= {% url 'update_meal_count' i.enrolment.id %} class="text-decoration-none" >
+                                        Change</a></td>
+                                </td>
+                                <td><a href= {% url 'confirm_meal' i.enrolment.id %} class="text-decoration-none" >
+                                    click</a>
+                                </td>
 
-                                    <td><a href= {% url 'delete_enrolment' i.id %} class="text-decoration-none" >
-                                        click</a></td>
-                                </tr>
+                                <td>{{ i.code }} </td>
+                                {% if i.is_rated == False %}
+                                    <td><a href= {% url 'rate_meal' i.id  %} class="text-decoration-none" >
+                                        Click</a>
+                                    </td>
+                                {% else %}
+                                    <th scope="col">N/A</th>
+                                {% endif %}
                             {% endfor %}
                             </tbody>
 

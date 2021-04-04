@@ -8,6 +8,7 @@ urlpatterns = [
     path('edit_profile', views.edit_profile, name="edit_profile"),
     path('dashboard', views.dashboard, name="dashboard"),
     path('view_enrolments', views.view_enrolments, name="view_enrolments"),
+    path('view_meals', views.view_meals, name="view_meals"),
     path('add_money', views.add_money, name="add_money"),
     path('create_enrolment/<int:plan_id>/', views.create_enrolment, name="create_enrolment"),
     path('delete_enrolment/<int:e_id>/', views.delete_enrolment, name="delete_enrolment"),
