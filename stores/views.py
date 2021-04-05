@@ -2,7 +2,7 @@ from math import floor
 from statistics import mean
 
 from django.shortcuts import render, redirect
-from enrolments.models import ExtendedUser
+from enrolments.models import ExtendedUser, Enrolment
 from enrolments.views import set_profile
 from rates.models import StoreRating
 from . import forms
@@ -309,8 +309,16 @@ def view_plan(request, plan_id):
 
     status = 0  # checks if the current user is the owner
     rated = 0  # checks if the user has already rated the store
+    enrolled = 0 # checks if the user has alrady enrolled to the plan
+    enrolment_id = 0
     plan = Plan.objects.get(pk=plan_id)
     week = Week.objects.get(plan = plan)
+    extended_user = ExtendedUser.objects.get(user=request.user)
+    enrolments = Enrolment.objects.filter(user=extended_user)
+    for i in enrolments:
+        if i.plan == plan:
+            enrolled = 1
+            enrolment_id = i.id
     # current_rating = get_rating(request, plan_id)
     # rating = current_rating[0]  # zeroth element contain the avg rating of the shop
     # people = current_rating[2]  # number of people rated
@@ -337,6 +345,8 @@ def view_plan(request, plan_id):
                                                     "week": week,
                                                     "status": status,
                                                     "rated": rated,
+                                                    "enrolled": enrolled,
+                                                    "enrolment_id": enrolment_id,
                                                     # "rating": rating,
                                                     # "people": people,
                                                     # "stars": stars,

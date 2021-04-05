@@ -61,13 +61,16 @@
                                 <th scope="col">Day/Night Meal</th>
                                 <th scope="col">Make Payment</th>
                                 <th scope="col">Enroll Out</th>
-
                             </tr>
                             </thead>
                             {%  for i in enrolments %}
                                 <tbody>
                                 <tr>
-                                    <td>{{ i.plan.name }}</td>
+                                    <td>
+                                        <a href= {% url 'view_plan' i.plan.id %} class="text-decoration-none" >
+                                            {{ i.plan.name }}
+                                        </a>
+                                    </td>
                                     <td>{{ i.start_date }}</td>
                                     <td>{{ i.end_date }}</td>
                                     <td><a href= {% url 'update_enrolment' i.id %} class="text-decoration-none" >
@@ -79,7 +82,6 @@
                                     <td><a href= {% url 'confirm_meal' i.id %} class="text-decoration-none" >
                                         click</a>
                                     </td>
-
                                     <td><a href= {% url 'delete_enrolment' i.id %} class="text-decoration-none" >
                                         click</a></td>
                                 </tr>
