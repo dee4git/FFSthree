@@ -1,10 +1,9 @@
 from math import floor
 from statistics import mean
-
 from django.shortcuts import render, redirect
 from enrolments.models import ExtendedUser, Enrolment
 from enrolments.views import set_profile
-from rates.models import StoreRating
+from rates.models import StoreRating, MealRating
 from . import forms
 from .models import Store, Plan, FoodDetail, Week
 # from plans.models import Product
@@ -304,6 +303,17 @@ def view_store(request, store_id):
                                                          # "plans": plans,
                                                          })
 
+def get_meal_rating(meal_ratings):
+    try:
+        rating_list = []
+        for i in meal_ratings:
+            rating_list.append(i.rating)
+        rating = round(mean(rating_list), 2)
+        stars = get_full_star(rating)
+        return [rating, len(rating_list), stars]
+    except:
+        return [0, 0, 0]
+
 
 def view_plan(request, plan_id):
 
@@ -319,39 +329,23 @@ def view_plan(request, plan_id):
         if i.plan == plan:
             enrolled = 1
             enrolment_id = i.id
-    # current_rating = get_rating(request, plan_id)
-    # rating = current_rating[0]  # zeroth element contain the avg rating of the shop
-    # people = current_rating[2]  # number of people rated
-    # stars = current_rating[3]  # number of full star
-    # if plan.owner == request.user:
-    #     status = 1
-    # try:
-    #     if PlanRating.objects.get(plan=plan_id, user=request.user):
-    #         rated = 1
-    #         your_review = PlanRating.objects.get(plan=plan_id, user=request.user)
-    #         your_stars = get_full_star(your_review.rating)
-    #         return render(request, "detail_plan.html", {
-    #                                                     "plan": plan,
-    #                                                     "week": week,
-    #                                                     "status": status,
-    #                                                     "rated": rated,
-    #                                                     # "rating": rating,
-    #                                                     # "people": people,
-    #                                                     # "your_rating": your_stars,
-    #                                                     # "stars": stars,
-    #                                                     })
-    # except:
+    # getting meal ratings
+    meal_ratings = MealRating.objects.filter(meal__enrolment__plan=plan)
+    ratings_details = get_meal_rating(meal_ratings)
+    avg_rating = ratings_details[0]
+    number_of_rating = ratings_details[1]
+    stars = ratings_details[2]
+
     return render(request, "detail_plan.html", {"plan": plan,
-                                                    "week": week,
-                                                    "status": status,
-                                                    "rated": rated,
-                                                    "enrolled": enrolled,
-                                                    "enrolment_id": enrolment_id,
-                                                    # "rating": rating,
-                                                    # "people": people,
-                                                    # "stars": stars,
-                                                    # "plans": plans,
-                                                    })
+                                                "week": week,
+                                                "status": status,
+                                                "rated": rated,
+                                                "enrolled": enrolled,
+                                                "enrolment_id": enrolment_id,
+                                                "avg_rating": avg_rating,
+                                                "number_of_rating": number_of_rating,
+                                                "stars": stars,
+                                                })
 
 
 def delete_store(request, store_id):
@@ -430,24 +424,24 @@ def store_plan(request, store_id):
             your_review = StoreRating.objects.get(store=store_id, user=request.user)
             your_stars = get_full_star(your_review.rating)
             return render(request, "plans_store.html", {"store": store,
-                                                           "status": status,
-                                                           "rated": rated,
-                                                           "rating": rating,
-                                                           "people": people,
-                                                           "stars": stars,
-                                                           "your_rating": your_stars,
-                                                           "reviews": reviews,
-                                                           "plans": plans,
-                                                           })
+                                                        "status": status,
+                                                        "rated": rated,
+                                                        "rating": rating,
+                                                        "people": people,
+                                                        "stars": stars,
+                                                        "your_rating": your_stars,
+                                                        "reviews": reviews,
+                                                        "plans": plans,
+                                                        })
     except:
         # enters is the user has not rated the store
         return render(request, "plans_store.html", {"store": store,
-                                                       "status": status,
-                                                       "rated": rated,
-                                                       "rating": rating,
-                                                       "people": people,
-                                                       "stars": stars,
-                                                       "reviews": reviews,
-                                                       "plans": plans,
-                                                       })
+                                                    "status": status,
+                                                    "rated": rated,
+                                                    "rating": rating,
+                                                    "people": people,
+                                                    "stars": stars,
+                                                    "reviews": reviews,
+                                                    "plans": plans,
+                                                    })
 

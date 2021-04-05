@@ -26,18 +26,29 @@
                         </div>
                     </div>
                     <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                        <div class="d-flex flex-row align-items-center">
-                            <h4 class="mr-1">BDT {{ plan.price }}</h4></span>
+                        <div class="d-flex flex-row align-items-center" >
+                            <h4 class="mr-1">BDT {{ plan.price }}</h4>
                         </div>
-                        <h6 class="text-success">Free shipping</h6>
-                        <div class="d-flex flex-column mt-4">
+                        <div class="d-flex flex-column mt-0">
                             {% if plan.capacity > 0 %}
-                                <a href= {% url 'create_enrolment' plan.id %} class="text-decoration-none" >
-                                    <button class="btn btn-outline-primary btn-sm mt-2" type="button">Enroll</button></a>
+                                {% if enrolled == 0 %}
+                                    <a href= {% url 'create_enrolment' plan.id %} class="text-decoration-none" >
+                                        <button class="btn btn-outline-primary btn-sm mt-2" type="button">Enroll</button></a>
+                                {% endif %}
+                                {% if enrolled == 1 %}
+                                    <a href= {% url 'delete_enrolment' enrolment_id %} class="text-decoration-none" >
+                                        <button class="btn btn-outline-primary btn-sm mt-2" type="button">Enroll Out</button></a>
+                                {% endif %}
                             {% else %}
                                 <button class="btn btn-dark" type="button">Not Available</button></a>
                             {% endif %}
                         </div>
+                    {% if avg_rating != 0 %}
+                        {{ stars }}    <br>{{ avg_rating }}/5 ({{ number_of_rating }})
+                    {% else %}
+                        <br>
+                    No ratings yet
+                    {% endif %}
                     </div>
                 </div>
             </div>
@@ -50,6 +61,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-5 col-md-6 col-12 pb-4">
+
                     <h1>Comments</h1>
                     {% for i in meal_ratings %}
                         <h4>{{ i.enroller.name }} (Rated: {{ i.rating }}⭐)</h4>

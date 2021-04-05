@@ -27,8 +27,7 @@
                         <div class="d-flex flex-row align-items-center">
                             <h4 class="mr-1">BDT {{ plan.price }}</h4></span>
                         </div>
-                        <h6 class="text-success">Free shipping</h6>
-                        <div class="d-flex flex-column mt-4">
+                        <div class="d-flex flex-column mt-0">
                             {% if plan.capacity > 0 %}
                                 {% if enrolled == 0 %}
                                     <a href= {% url 'create_enrolment' plan.id %} class="text-decoration-none" >
@@ -42,6 +41,12 @@
                                 <button class="btn btn-dark" type="button">Not Available</button></a>
                             {% endif %}
                         </div>
+                        {% if avg_rating != 0 %}
+                            {{ stars }}    <br>{{ avg_rating }}/5 ({{ number_of_rating }})
+                        {% else %}
+                            <br>
+                            No ratings yet
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -1,21 +1,57 @@
+from statistics import mean
+
 from django.shortcuts import render, redirect
 from delivery_fighters.models import Meal
-from enrolments.models import ExtendedUser
+from enrolments.models import ExtendedUser, Enrolment
 from . import forms
-from stores.models import Store, Plan
-from stores.views import view_store, view_plan
+from stores.models import Store, Plan, Week
+from stores.views import view_store, view_plan, get_full_star
 from django.contrib.auth.decorators import login_required
-import  datetime
+import datetime
 from .models import StoreRating, MealRating
 
 
+def get_meal_rating(meal_ratings):
+    try:
+        rating_list = []
+        for i in meal_ratings:
+            rating_list.append(i.rating)
+        rating = round(mean(rating_list), 2)
+        stars = get_full_star(rating)
+        return [rating, len(rating_list), stars]
+    except:
+        return [0, 0, 0]
+
+
 def view_plan_rating(request, plan_id):
+    rated = 0  # checks if the user has already rated the store
+    enrolled = 0  # checks if the user has already enrolled to the plan
+    enrolment_id = 0
     plan = Plan.objects.get(pk=plan_id)
+    week = Week.objects.get(plan=plan)
+    extended_user = ExtendedUser.objects.get(user=request.user)
+    enrolments = Enrolment.objects.filter(user=extended_user)
+    for i in enrolments:
+        if i.plan == plan:
+            enrolled = 1
+            enrolment_id = i.id
+
+    # getting meal ratings
     meal_ratings = MealRating.objects.filter(meal__enrolment__plan=plan)
-    print(meal_ratings)
+    ratings_details = get_meal_rating(meal_ratings)
+    avg_rating = ratings_details[0]
+    number_of_rating = ratings_details[1]
+    stars = ratings_details[2]
     return render(request, 'plan_rating.html', {
+        "rated": rated,
+        "week": week,
+        "enrolled": enrolled,
+        "enrolment_id": enrolment_id,
         "meal_ratings": meal_ratings,
         "plan": plan,
+        "avg_rating": avg_rating,
+        "number_of_rating": number_of_rating,
+        "stars": stars,
     })
 
 
@@ -40,7 +76,7 @@ def rate_meal(request, meal_id):
         "form": form,
         "meal": meal,
         # "already_rated": already_rated_meal,
-                                              })
+    })
 
 
 def edit_store_rating(request, store_id):
