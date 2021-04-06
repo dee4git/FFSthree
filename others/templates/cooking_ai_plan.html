@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% extends 'navbar.html' %}
+{% block content %}
+    {% load static %}
+    <div id="yourID"  align="middle">
+        <img class="img-fluid" src="{% static "cook.gif" %}" alt="something" >
+    </div>
+    <div class="container" align="middle">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Hello {{ extended_user.name }}!</h4>
+            <p>Your BMI is {{ extended_user.bmi }}</p>
+            <hr>
+            <p class="mb-0">{{ message }}</p>
+        </div>
+        <br>
+        <div class="btn-group" role="group" aria-label="Basic example" align="middle">
+            <a href= {% url 'choose_ai_plan' 1 %} class="text-decoration-none" >
+                <button  type="button" class="btn btn-outline-secondary">Lose Weight</button>
+            </a>
+            &nbsp;&nbsp;
+            <a href= {% url 'choose_ai_plan' 2 %} class="text-decoration-none" >
+                <button type="button" class="btn btn-outline-success">Maintain Weight</button>&nbsp;&nbsp;
+            </a>
+            <a href= {% url 'choose_ai_plan' 3 %} class="text-decoration-none" >
+                <button type="button" class="btn btn-outline-danger">Gain Weight</button>&nbsp;&nbsp;
+            </a>
+        </div>
+    </div>
+    <!--container end.//-->
+
+    <br><br>
+    <article class="bg-secondary mb-3">
+        <div class="card-body text-center">
+            <h3 class="text-white mt-3">Freelance Food Service</h3>
+            {#        <p class="h5 text-white">Components and templates <br> for Ecommerce, marketplace, booking websites#}
+            {#            and product landing pages</p>   <br>#}
+            {#        <p><a class="btn btn-warning" target="_blank" href="http://bootstrap-ecommerce.com/"> Bootstrap-ecommerce.com#}
+            {#            <i class="fa fa-window-restore "></i></a></p>#}
+        </div>
+        <br><br>
+    </article>
+
+{% endblock %}

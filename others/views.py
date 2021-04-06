@@ -1,8 +1,12 @@
+import math
+
 from django.db.models import Q
 from django.shortcuts import render
 
 # Create your views here.
 from FFSthree.views import home
+from enrolments.models import ExtendedUser
+from enrolments.views import set_profile
 from stores.models import Plan, Store, Week
 from django.db.models import CharField
 
@@ -112,4 +116,66 @@ def all_search_sorts(request):
 
 
 def ai_plan(request):
-    pass
+    try:
+        extended_user = ExtendedUser.objects.get(user=request.user)
+        bmi = extended_user.bmi
+        if bmi > 25:
+            message = "You are currently overweight, we recommend you to choose meals that will help you to lose " \
+                      "weight. "
+            return render(request, 'cooking_ai_plan.html', {
+                "message": message,
+                "extended_user": extended_user
+            })
+        elif 18 >= bmi > 24.9:
+            message = "You currently have healthy weight, we recommend you to choose meals that will help you to " \
+                      "maintain weight "
+            return render(request, 'cooking_ai_plan.html', {
+                "message": message,
+                "extended_user": extended_user
+            })
+        else:
+            message = "You are currently underweight, we recommend you to choose meals that will help you to " \
+                      "gain weight "
+            return render(request, 'cooking_ai_plan.html', {
+                "message": message,
+                "extended_user": extended_user
+            })
+    except:
+        return set_profile(request)
+
+
+def bmr(extended_user):
+    weight = extended_user.weight
+    height = extended_user.height
+    gender = extended_user.gender
+    age = extended_user.age
+    ft = math.floor(height)
+    inch = height - ft
+    print(ft, inch)
+    ft = ft * 30.48
+    inch = inch * 2.54
+    height = ft + inch
+    if gender == 'Male':
+        return round(13.397 * weight + 4.799 * height - 5.677 * age + 88.362, 2)
+    if gender == 'Female':
+        return round(9.247 * weight + 3.098 * height - 4.330 * age + 447.593, 2)
+
+
+def choose_ai_plan(request, key):
+    extended_user = ExtendedUser.objects.get(user=request.user)
+    calorie = bmr(extended_user)
+    lose_calorie = calorie - 200
+    gain_calorie = calorie + 200
+    plans = Plan.objects.none()
+    if key == 1:
+        plans = Plan.objects.filter(total_estimated_calorie__lt=lose_calorie)
+    if key == 2:
+        plans = Plan.objects.filter(total_estimated_calorie__range=[lose_calorie, gain_calorie])
+    if key == 3:
+        plans = Plan.objects.filter(total_estimated_calorie__gt=gain_calorie)
+    return render(request, 'ai_plan_results.html',
+                  {
+                      "plans": plans,
+                      "calorie": calorie,
+                  }
+                  )

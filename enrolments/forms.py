@@ -37,9 +37,11 @@ class ExtendedUserForm(forms.ModelForm):
         fields = [
             "name",
             "phone",
+            "gender",
             "location",
             "address",
             "height",
             "weight",
             "photo",
+            "age",
         ]

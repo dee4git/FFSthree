@@ -6,7 +6,7 @@
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <h2 class="active"> Complete Profile Setup</h2>
-                        <form method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table class="table table-borderless">
                     <thead>
@@ -23,11 +23,22 @@
                         <th scope="col">                {{ form.height.label_tag }}</th>
                         <th scope="col">         <input type="text"       {{ form.height }}
                         </th>
-                    </tr><tr>
+                    </tr>
+                    <tr>
                         <th scope="col">                {{ form.weight.label_tag }}</th>
                         <th scope="col">    <input type="text"     {{ form.weight }}
                         </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">                {{ form.age.label_tag }}</th>
+                        <th scope="col">    <input type="text"     {{ form.age }}
+                        </th>
+                    </tr>
 
+                    <tr>
+                        <th scope="col">                {{ form.gender.label_tag }}</th>
+                        <th scope="col"  >        {{ form.gender }}
+                        </th>
                     </tr>
                     <tr>
                         <th scope="col">                {{ form.location.label_tag }}</th>

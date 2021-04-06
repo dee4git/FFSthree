@@ -1,41 +1,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% extends 'navbar.html' %}
 {% block content %}
-    {% if stores or plans %}
+    {% if  plans %}
         <div class="jumbotron d-flex align-items-center">
             <div class="container" align="middle">
-                <h2>Search Results for "{{ keyword }}"</h2>
+                <h2>Your current BMR {{ calorie }}</h2>
             </div>
         </div>
         <div class="container">
-            {% if stores %}
-                <br/>
-                <h2>Found Shops</h2>
-                <hr/>
-                <div class="row">
-                    {% for i in stores %}
-                        <div class="col-md-3">
-                            <div class="card mb-3 shadow">
-                                <a href="{% url 'view_store' i.id %}" class="text-decoration-none">
-                                    <h3 class="card-text" > &nbsp{{ i.name }}</h3></a>
-                                <p>&nbsp   <i class="fa fa-map-marker" style="font-size:20px"></i>
-                                    {{ i.location }}</p>
-                                <img class="card-img-top" src="{{ i.display_picture.url }}" alt="No image found!"/>
-                                <div class="card-body">
-                                    <p class="card-text">Description: {{ i.description }}</p>
-                                </div>
-                                <br/>
-                            </div>
-                        </div>
-                        <br/>
-                    {% endfor %}
-                </div>
-                </div>
-            {% endif %}
-        <div class="container">
             <br/>
             {% if plans %}
-                <h2>Found Plans</h2>
+                <h2>Found Plans For You <3</h2>
                 <hr/>
                 <div class="row">
                     {% for i in plans %}
@@ -67,7 +42,7 @@
     {% else %}
         <div class="jumbotron d-flex align-items-center">
             <div class="container" align="middle">
-                <h2>No results found for "{{ keyword }}"</h2>
+                <h2>No results found for You </h2>
             </div>
         </div>
     {% endif %}

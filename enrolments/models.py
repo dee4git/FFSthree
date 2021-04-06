@@ -8,6 +8,8 @@ locations = [('Farmgate', 'Farmgate'), ('Dhanmondi', 'Dhanmondi'), ('Moghbazar',
              ('Nilkhet', 'Nilkhet'), ('Bashabo', 'Bashabo'), ('Rampura', 'Rampura'), ('Mouchak', 'Mouchak'),
              ('Mugdha', 'Mugdha'), ('Wari', 'Wari'), ('Shahabagh', 'Shahabagh')]
 
+sex = [('Male', 'Male'), ('Female', 'Female')]
+
 
 # Create your models here.
 class ExtendedUser(models.Model):
@@ -18,7 +20,9 @@ class ExtendedUser(models.Model):
     address = models.CharField(max_length=200, default='House No / Road Number / Floor Number')
     height = models.FloatField(blank=True, null=True)
     weight = models.IntegerField(blank=True, null=True)
+    age = models.IntegerField(default=25)
     bmi = models.FloatField(blank=True, null=True)
+    gender = models.CharField(choices=sex, default='Male', max_length=100)
     balance = models.FloatField(default=0.0, blank=True, null=True)
     photo = models.ImageField(upload_to='pics/users', default='dp.png')
 
@@ -31,4 +35,3 @@ class Enrolment(models.Model):
     special_note = models.CharField(default='Call my brother if I dont pick up', max_length=500)
     day_meal_count = models.IntegerField(default=1)
     night_meal_count = models.IntegerField(default=1)
-

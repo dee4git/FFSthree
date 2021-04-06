@@ -94,7 +94,7 @@ def add_week(request, plan_id):
 
             # coounting total calories and updating it
             calories = count_calorie(data)
-            plan.total_estimated_calorie = calories
+            plan.total_estimated_calorie = calories/7  # avg calorie per day
             plan.visibility = True
             plan.save()
             instance.save()
