@@ -40,6 +40,7 @@ class Plan(models.Model):
     category = models.CharField(choices=plan_category, max_length=100)
     total_estimated_calorie = models.FloatField(default=0.0)
     visibility = models.BooleanField(default=False)
+    rating = models.FloatField(default=0.0)
     photo_1 = models.ImageField(upload_to='pics/plans', default='plan.png')
     photo_2 = models.ImageField(upload_to='pics/plans', default='plan.png')
     photo_3 = models.ImageField(upload_to='pics/plans', default='plan.png')

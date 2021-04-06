@@ -55,8 +55,17 @@ def view_plan_rating(request, plan_id):
     })
 
 
+def get_plan_rating(plan):
+    meal_ratings = MealRating.objects.filter(meal__enrolment__plan=plan)
+    ratings_details = get_meal_rating(meal_ratings)
+    avg_rating = ratings_details[0]
+
+    return avg_rating
+
+
 def rate_meal(request, meal_id):
     meal = Meal.objects.get(pk=meal_id)
+    plan = meal.enrolment.plan
     enroller = ExtendedUser.objects.get(user=request.user)
 
     if request.method == "POST":
@@ -68,6 +77,8 @@ def rate_meal(request, meal_id):
             meal.is_rated = True
             meal.save()
             instance.save()
+            plan.rating = get_plan_rating(plan)
+            plan.save()
             return view_plan(request, plan_id=meal.enrolment.plan.id)
     else:
         form = forms.MealRatingForm()

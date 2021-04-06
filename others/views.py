@@ -8,6 +8,7 @@ from django.db.models import CharField
 
 
 def search(request):
+    x_plans = []
     if request.method == 'GET':  # If the form is submitted
         keyword = request.GET.get('search_box', None)
         print('k', keyword)
@@ -85,7 +86,6 @@ def search(request):
                 Q(friday_night_food_3__name__contains=keyword) |
                 Q(friday_night_food_4__name__contains=keyword)
             )
-            x_plans = []
             for i in weeks:
                 if i.plan not in plans:
                     x_plans.append(i.plan)
@@ -100,7 +100,7 @@ def search(request):
 
 
 def all_plans_sorts(request):
-    pass
+    plans = Plan.objects.filter()
 
 
 def all_stores_sorts(request):
