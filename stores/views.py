@@ -98,7 +98,7 @@ def add_week(request, plan_id):
             plan.visibility = True
             plan.save()
             instance.save()
-            return published_plans(request,plan_id)
+            return published_plans(request,store.id)
     else:
         form = forms.WeekForm(user=request.user)
 
@@ -120,12 +120,14 @@ def update_plan(request, plan_id):
     confirmation = "Update Plan?"
     cancel = "Cancel"
     up = Plan.objects.get(pk=plan_id)
+    store = up.store
+
     if up.store.owner == request.user:
         if request.method == "POST":
             form = forms.PlanForm(request.POST or None, request.FILES, instance=up)
             if form.is_valid():
                 form.save()
-                return published_plans(request,plan_id)
+                return published_plans(request, store.id)
 
         else:
             form = forms.PlanForm(instance=up)
