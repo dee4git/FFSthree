@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'enrolments',
     'rates',
     'delivery_fighters',
+    'others',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -61,6 +62,7 @@ TEMPLATES = [
                  'accounts/templates',
                  'stores/templates',
                  'enrolments/templates',
+                 'others/templates',
                  ]
         ,
         'APP_DIRS': True,

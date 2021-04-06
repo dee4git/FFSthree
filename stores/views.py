@@ -323,12 +323,16 @@ def view_plan(request, plan_id):
     enrolment_id = 0
     plan = Plan.objects.get(pk=plan_id)
     week = Week.objects.get(plan = plan)
-    extended_user = ExtendedUser.objects.get(user=request.user)
-    enrolments = Enrolment.objects.filter(user=extended_user)
-    for i in enrolments:
-        if i.plan == plan:
-            enrolled = 1
-            enrolment_id = i.id
+    try:
+        extended_user = ExtendedUser.objects.get(user=request.user)
+        enrolments = Enrolment.objects.filter(user=extended_user)
+        for i in enrolments:
+            if i.plan == plan:
+                enrolled = 1
+                enrolment_id = i.id
+    except:
+        # if the user is not logged in.
+        enrolled = 0
     # getting meal ratings
     meal_ratings = MealRating.objects.filter(meal__enrolment__plan=plan)
     ratings_details = get_meal_rating(meal_ratings)
