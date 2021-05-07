@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'rates',
     'delivery_fighters',
     'others',
+    'notifications',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,6 +64,7 @@ TEMPLATES = [
                  'stores/templates',
                  'enrolments/templates',
                  'others/templates',
+                 'notifications/templates',
                  ]
         ,
         'APP_DIRS': True,

@@ -35,6 +35,11 @@
             </div>
         </div>
     </div>
+    {% if extended_user.balance < 200 %}
+    <div class="alert alert-danger" role="alert" align="middle">
+        Your minimum balance should be more than 200 to receive meals. Please add money
+    </div>
+    {% endif %}
     <div class="card text-center">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
